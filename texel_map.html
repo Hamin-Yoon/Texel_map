@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c35ca8f6d66944e296568b12c9ae0d64 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      body.lang-nl .content-nl { display: block; }
+      body.lang-nl .content-en { display: none; }
+      body.lang-en .content-nl { display: none; }
+      body.lang-en .content-en { display: block; }
+      .category-panel { position: absolute; top: 20px; left: 60px; z-index: 9999; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); font-family: sans-serif; min-width: 180px; max-width: 250px; }
+      .category-panel h4 { margin: 0 0 10px 0; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+      .cat-btn { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; margin-bottom: 6px; border: 1px solid #007bff; border-radius: 5px; background: #e7f1ff; color: #007bff; cursor: pointer; font-size: 12px; font-weight: bold; text-align: left; transition: all 0.2s; }
+      .cat-btn.inactive { background: #f8f9fa; border-color: #ccc; color: #777; }
+      .lang-switcher { position: absolute; top: 20px; right: 20px; z-index: 9999; background: white; padding: 10px 15px; border: 2px solid rgba(0,0,0,0.2); border-radius: 8px; cursor: pointer; font-family: sans-serif; font-weight: bold; }
+      .popup-btn { display: inline-block; margin-top: 8px; padding: 5px 10px; background-color: #007bff; color: white !important; text-decoration: none; border-radius: 4px; font-size: 12px; }
+    </style>
+
+    <div class="category-panel">
+      <h4 class="content-nl">Filter Categorieën</h4>
+      <h4 class="content-en">Filter Categories</h4>
+      <div id="category-buttons">
+        
+        <button id="btn_feature_group_497adacc2c95ff280f8631c1d8b8e222" class="cat-btn">
+          <i class="fa-solid fa-eye"></i> Galerieën
+        </button>
+        
+        <button id="btn_feature_group_b963b83b7d7f416a9fcaaeff5f280aef" class="cat-btn">
+          <i class="fa-solid fa-eye"></i> Gallery-route1
+        </button>
+        
+        <button id="btn_feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd" class="cat-btn">
+          <i class="fa-solid fa-eye"></i> boetje
+        </button>
+        
+        <button id="btn_feature_group_8da1c85d4dc3fd1696af3c40e70b9a63" class="cat-btn">
+          <i class="fa-solid fa-eye"></i> vogelkijkpunt
+        </button>
+        
+      </div>
+    </div>
+    <button id="langBtn" class="lang-switcher" onclick="toggleLanguage()">🇬🇧 Switch to English</button>
+
+    <script>
+      function toggleLanguage() {
+        const body = document.body;
+        if (body.classList.contains('lang-nl')) {
+          body.classList.remove('lang-nl'); body.classList.add('lang-en');
+          document.getElementById('langBtn').innerText = "🇳🇱 Bekijk in het Nederlands";
+        } else {
+          body.classList.remove('lang-en'); body.classList.add('lang-nl');
+          document.getElementById('langBtn').innerText = "🇬🇧 Switch to English";
+        }
+      }
+      document.body.classList.add('lang-nl');
+
+      // Wait a fraction of a second for Folium to load, then attach our exact click events
+      window.addEventListener("load", function() {
+        setTimeout(function() {
+            
+        document.getElementById("btn_feature_group_497adacc2c95ff280f8631c1d8b8e222").onclick = function() {
+            if (map_c35ca8f6d66944e296568b12c9ae0d64.hasLayer(feature_group_497adacc2c95ff280f8631c1d8b8e222)) {
+                map_c35ca8f6d66944e296568b12c9ae0d64.removeLayer(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+                this.classList.add('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Galerieën';
+            } else {
+                map_c35ca8f6d66944e296568b12c9ae0d64.addLayer(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+                this.classList.remove('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye"></i> Galerieën';
+            }
+        };
+        
+        document.getElementById("btn_feature_group_b963b83b7d7f416a9fcaaeff5f280aef").onclick = function() {
+            if (map_c35ca8f6d66944e296568b12c9ae0d64.hasLayer(feature_group_b963b83b7d7f416a9fcaaeff5f280aef)) {
+                map_c35ca8f6d66944e296568b12c9ae0d64.removeLayer(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+                this.classList.add('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Gallery-route1';
+            } else {
+                map_c35ca8f6d66944e296568b12c9ae0d64.addLayer(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+                this.classList.remove('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye"></i> Gallery-route1';
+            }
+        };
+        
+        document.getElementById("btn_feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd").onclick = function() {
+            if (map_c35ca8f6d66944e296568b12c9ae0d64.hasLayer(feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd)) {
+                map_c35ca8f6d66944e296568b12c9ae0d64.removeLayer(feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd);
+                this.classList.add('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> boetje';
+            } else {
+                map_c35ca8f6d66944e296568b12c9ae0d64.addLayer(feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd);
+                this.classList.remove('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye"></i> boetje';
+            }
+        };
+        
+        document.getElementById("btn_feature_group_8da1c85d4dc3fd1696af3c40e70b9a63").onclick = function() {
+            if (map_c35ca8f6d66944e296568b12c9ae0d64.hasLayer(feature_group_8da1c85d4dc3fd1696af3c40e70b9a63)) {
+                map_c35ca8f6d66944e296568b12c9ae0d64.removeLayer(feature_group_8da1c85d4dc3fd1696af3c40e70b9a63);
+                this.classList.add('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> vogelkijkpunt';
+            } else {
+                map_c35ca8f6d66944e296568b12c9ae0d64.addLayer(feature_group_8da1c85d4dc3fd1696af3c40e70b9a63);
+                this.classList.remove('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye"></i> vogelkijkpunt';
+            }
+        };
+        
+        }, 500);
+      });
+    </script>
+    
+    
+            <div class="folium-map" id="map_c35ca8f6d66944e296568b12c9ae0d64" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_c35ca8f6d66944e296568b12c9ae0d64 = L.map(
+                "map_c35ca8f6d66944e296568b12c9ae0d64",
+                {
+                    center: [53.0583, 4.8018],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 12,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e040a1bbccf51e8591a5a5e161410426 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 20, "maxZoom": 20, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abcd", "tms": false}
+            );
+        
+    
+            tile_layer_e040a1bbccf51e8591a5a5e161410426.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+        
+    
+            var feature_group_497adacc2c95ff280f8631c1d8b8e222 = L.featureGroup(
+                {}
+            );
+        
+    
+            var marker_68b7dc261fea4b92653524060fee9e8e = L.marker(
+                [53.0556526, 4.8060633],
+                {}
+            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+        
+    
+            var icon_66edbb532d1bbf25ce99d6b1f19a088f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_68b7dc261fea4b92653524060fee9e8e.setIcon(icon_66edbb532d1bbf25ce99d6b1f19a088f);
+        
+    
+        var popup_001757c23c835ecd5e880ff78130b0ac = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_7e1b57cb7e6287ae731a76d2ccdd2454 = $(`<div id="html_7e1b57cb7e6287ae731a76d2ccdd2454" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Atelier Galerie Texel Kunst - Angelina Stiehl</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Atelier en galerie van Angelina Stiehl.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Sluyscoog 79, 1791 WV Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Atelier Galerie Texel Kunst - Angelina Stiehl</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Studio and gallery of Angelina Stiehl.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Sluyscoog 79, 1791 WV Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_001757c23c835ecd5e880ff78130b0ac.setContent(html_7e1b57cb7e6287ae731a76d2ccdd2454);
+            
+        
+
+        marker_68b7dc261fea4b92653524060fee9e8e.bindPopup(popup_001757c23c835ecd5e880ff78130b0ac)
+        ;
+
+        
+    
+    
+            var marker_e1758e78b996cc23c57fecb9eb21d8f6 = L.marker(
+                [53.1120129, 4.8199974],
+                {}
+            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+        
+    
+            var icon_00be38548590a50101bad2ace1ad707c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_e1758e78b996cc23c57fecb9eb21d8f6.setIcon(icon_00be38548590a50101bad2ace1ad707c);
+        
+    
+        var popup_fc73d5a823a511fbc183071af5b9156b = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_9c9cd98ecb327515924c1918ce364ae3 = $(`<div id="html_9c9cd98ecb327515924c1918ce364ae3" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">De Eiland Galerij</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Expositie keramiek in de beeldentuin.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Postweg 72, 1795 JR De Cocksdorp, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/keramiek-in-de-beeldentuin/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">De Eiland Galerij</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Ceramics exhibition in the sculpture garden.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Postweg 72, 1795 JR De Cocksdorp, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/keramiek-in-de-beeldentuin/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_fc73d5a823a511fbc183071af5b9156b.setContent(html_9c9cd98ecb327515924c1918ce364ae3);
+            
+        
+
+        marker_e1758e78b996cc23c57fecb9eb21d8f6.bindPopup(popup_fc73d5a823a511fbc183071af5b9156b)
+        ;
+
+        
+    
+    
+            var marker_1916f4a1a151c4efce66a66e0867b31e = L.marker(
+                [53.0200623, 4.7557992],
+                {}
+            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+        
+    
+            var icon_ad5bf311cfcd4af11159946e40bd4c5a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_1916f4a1a151c4efce66a66e0867b31e.setIcon(icon_ad5bf311cfcd4af11159946e40bd4c5a);
+        
+    
+        var popup_a9988deb753be31b73b82c04c59f5df4 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_225a86e819cbbee4a57ff354b167953c = $(`<div id="html_225a86e819cbbee4a57ff354b167953c" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Wieg Kunst</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Wieg kunst expositie in traditionele schapenboet.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wieg-kunst-in-schapenboet/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Cradle Art</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Cradle art exhibition in a traditional sheep barn.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wieg-kunst-in-schapenboet/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_a9988deb753be31b73b82c04c59f5df4.setContent(html_225a86e819cbbee4a57ff354b167953c);
+            
+        
+
+        marker_1916f4a1a151c4efce66a66e0867b31e.bindPopup(popup_a9988deb753be31b73b82c04c59f5df4)
+        ;
+
+        
+    
+    
+            var marker_a9efe7244d9578d6c81aca0275b57a10 = L.marker(
+                [53.0850138, 4.8736891],
+                {}
+            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+        
+    
+            var icon_1892862007b8efaaa46a817395111e16 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_a9efe7244d9578d6c81aca0275b57a10.setIcon(icon_1892862007b8efaaa46a817395111e16);
+        
+    
+        var popup_c76d68baf10386accfa823905f5c038c = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_51e8335ad834433fe1b381d54e25b3c3 = $(`<div id="html_51e8335ad834433fe1b381d54e25b3c3" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Wolkathedraal</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Bijzondere kunstexpositie van wol in Oosterend.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Peperstraat 7, 1793 AA Oosterend, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wolkathedraal/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Wool Cathedral</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Unique wool art exhibition in Oosterend.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Peperstraat 7, 1793 AA Oosterend, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wolkathedraal/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_c76d68baf10386accfa823905f5c038c.setContent(html_51e8335ad834433fe1b381d54e25b3c3);
+            
+        
+
+        marker_a9efe7244d9578d6c81aca0275b57a10.bindPopup(popup_c76d68baf10386accfa823905f5c038c)
+        ;
+
+        
+    
+    
+            var marker_f266c12091b7bfa8e7cd7d4cf8ff82da = L.marker(
+                [53.0972392, 4.7613086],
+                {}
+            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+        
+    
+            var icon_1818eb8894794d44ea55fe64a032ab6f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
+            );
+            marker_f266c12091b7bfa8e7cd7d4cf8ff82da.setIcon(icon_1818eb8894794d44ea55fe64a032ab6f);
+        
+    
+        var popup_53494b5088c5c7ea57e7fcda687c8184 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_9d213c09aeac7e9e9489c78ffd13f3e6 = $(`<div id="html_9d213c09aeac7e9e9489c78ffd13f3e6" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Expositie Texels Landschap</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Expositie van het Texelse landschap bij Galerie Posthuys.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Brink 14, 1796 AJ De Koog, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/posthuys-expositie-texels-landschap/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Texel Landscape Exhibition</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Exhibition of the Texel landscape at Galerie Posthuys.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Brink 14, 1796 AJ De Koog, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/posthuys-expositie-texels-landschap/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_53494b5088c5c7ea57e7fcda687c8184.setContent(html_9d213c09aeac7e9e9489c78ffd13f3e6);
+            
+        
+
+        marker_f266c12091b7bfa8e7cd7d4cf8ff82da.bindPopup(popup_53494b5088c5c7ea57e7fcda687c8184)
+        ;
+
+        
+    
+    
+            feature_group_497adacc2c95ff280f8631c1d8b8e222.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+        
+    
+            var feature_group_b963b83b7d7f416a9fcaaeff5f280aef = L.featureGroup(
+                {}
+            );
+        
+    
+            var marker_ec86065ad9bfdfd1e1d290fc5aacb89a = L.marker(
+                [53.0662304, 4.7850184],
+                {}
+            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+        
+    
+            var icon_2e363c0187b5a1a5e53048927e35e106 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
+            );
+            marker_ec86065ad9bfdfd1e1d290fc5aacb89a.setIcon(icon_2e363c0187b5a1a5e53048927e35e106);
+        
+    
+        var popup_ccd612b62f39eded613065706436de4c = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_89702f4208690b80f33ef54567b9f71e = $(`<div id="html_89702f4208690b80f33ef54567b9f71e" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">01 QUUB</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo juni/aug/sept 12.00-16.00, of op afspraak.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Kogerweg 145, 1791 MJ Den Burg, Texel</p>                 <a href="https://www.quubkunst.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">01 QUUB</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed June/Aug/Sept 12:00-16:00, or by appointment.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Kogerweg 145, 1791 MJ Den Burg, Texel</p>                 <a href="https://www.quubkunst.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_ccd612b62f39eded613065706436de4c.setContent(html_89702f4208690b80f33ef54567b9f71e);
+            
+        
+
+        marker_ec86065ad9bfdfd1e1d290fc5aacb89a.bindPopup(popup_ccd612b62f39eded613065706436de4c)
+        ;
+
+        
+    
+    
+            var marker_995d159c6043b4f26db20e125eb16a50 = L.marker(
+                [53.0550153, 4.7982876],
+                {}
+            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+        
+    
+            var icon_b41ffdf222656f18a2ea43accffa78c6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
+            );
+            marker_995d159c6043b4f26db20e125eb16a50.setIcon(icon_b41ffdf222656f18a2ea43accffa78c6);
+        
+    
+        var popup_613330716242375be62b24ee429821f8 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_fce0cb66414a0451be12217df1ed6409 = $(`<div id="html_fce0cb66414a0451be12217df1ed6409" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">03 MUSEUM GALERIE RAT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: Jaarrond wo-za 11.00-17.00, of op afspraak.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Burgwal 20, 1791 AJ Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">03 MUSEUM GALLERY RAT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Year-round Wed-Sat 11:00-17:00, or by appointment.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Burgwal 20, 1791 AJ Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_613330716242375be62b24ee429821f8.setContent(html_fce0cb66414a0451be12217df1ed6409);
+            
+        
+
+        marker_995d159c6043b4f26db20e125eb16a50.bindPopup(popup_613330716242375be62b24ee429821f8)
+        ;
+
+        
+    
+    
+            var marker_81051e276a023f5c4357233b4ad2bdad = L.marker(
+                [53.053279, 4.7989449],
+                {}
+            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+        
+    
+            var icon_49b63a3f24268e577f4b9770ed04482a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
+            );
+            marker_81051e276a023f5c4357233b4ad2bdad.setIcon(icon_49b63a3f24268e577f4b9770ed04482a);
+        
+    
+        var popup_709f30fa4273e57ce0e6de70d85548b0 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_dba9307912d10a3cfb7fedb1837c889d = $(`<div id="html_dba9307912d10a3cfb7fedb1837c889d" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">05 INA VADER</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo 11.00-16.00, of op afspraak.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Warmoesstraat 52, 1791 CS Den Burg, Texel</p>                 <a href="https://www.inavader.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">05 INA VADER</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed 11:00-16:00, or by appointment.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Warmoesstraat 52, 1791 CS Den Burg, Texel</p>                 <a href="https://www.inavader.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_709f30fa4273e57ce0e6de70d85548b0.setContent(html_dba9307912d10a3cfb7fedb1837c889d);
+            
+        
+
+        marker_81051e276a023f5c4357233b4ad2bdad.bindPopup(popup_709f30fa4273e57ce0e6de70d85548b0)
+        ;
+
+        
+    
+    
+            var marker_db6e0debdd2e0cd195eaf7ea10c56061 = L.marker(
+                [53.0538723, 4.7987451],
+                {}
+            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+        
+    
+            var icon_326e011b8ae173bbba25c0c854e33001 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
+            );
+            marker_db6e0debdd2e0cd195eaf7ea10c56061.setIcon(icon_326e011b8ae173bbba25c0c854e33001);
+        
+    
+        var popup_d1a99a47aa9dac221882be6d217d19bc = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_849d615924a5482248a3043c7bc569b9 = $(`<div id="html_849d615924a5482248a3043c7bc569b9" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">06 ZOUT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo april-sept vanaf 12.00. Kunst-etage dagelijks open tijdens openingstijden Public Grill.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Parkstraat 32-34, 1791 BA Den Burg, Texel</p>                 <a href="https://www.zouttexel.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">06 ZOUT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed April-Sept from 12:00. Art floor open daily during Public Grill opening hours.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Parkstraat 32-34, 1791 BA Den Burg, Texel</p>                 <a href="https://www.zouttexel.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_d1a99a47aa9dac221882be6d217d19bc.setContent(html_849d615924a5482248a3043c7bc569b9);
+            
+        
+
+        marker_db6e0debdd2e0cd195eaf7ea10c56061.bindPopup(popup_d1a99a47aa9dac221882be6d217d19bc)
+        ;
+
+        
+    
+    
+            var marker_b4553d3921e85ce918fd551ab83dcf14 = L.marker(
+                [53.0536432, 4.8021295],
+                {}
+            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+        
+    
+            var icon_8e47c137f355b593aef919ef23f75f18 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
+            );
+            marker_b4553d3921e85ce918fd551ab83dcf14.setIcon(icon_8e47c137f355b593aef919ef23f75f18);
+        
+    
+        var popup_aec56a5be9098ca6ac293275803f8a95 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_56e757327308854a9d75b7f432f8d0a3 = $(`<div id="html_56e757327308854a9d75b7f432f8d0a3" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">07 MARGOT BIK</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo april-sept 10.30-13.30.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Wilhelminalaan 23, 1791 AL Den Burg, Texel</p>                 <a href="https://www.bikart.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">07 MARGOT BIK</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed April-Sept 10:30-13:30.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Wilhelminalaan 23, 1791 AL Den Burg, Texel</p>                 <a href="https://www.bikart.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_aec56a5be9098ca6ac293275803f8a95.setContent(html_56e757327308854a9d75b7f432f8d0a3);
+            
+        
+
+        marker_b4553d3921e85ce918fd551ab83dcf14.bindPopup(popup_aec56a5be9098ca6ac293275803f8a95)
+        ;
+
+        
+    
+    
+            feature_group_b963b83b7d7f416a9fcaaeff5f280aef.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+        
+    
+            var feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd = L.featureGroup(
+                {}
+            );
+        
+    
+            var marker_7b7004bee936f66197c1830a54ec9ce5 = L.marker(
+                [53.0200623, 4.7557992],
+                {}
+            ).addTo(feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd);
+        
+    
+            var icon_e2ec9a79f53f130c032c457a7e017e69 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_7b7004bee936f66197c1830a54ec9ce5.setIcon(icon_e2ec9a79f53f130c032c457a7e017e69);
+        
+    
+        var popup_ccfc78ee71d02dafed05c02f127f67f0 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_993f8536ee89969751af1221625634d1 = $(`<div id="html_993f8536ee89969751af1221625634d1" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Boetje van Klemat</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Sfeervol vakantiehuisje op Texel.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://boetjevanklemat.nl/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Boetje van Klemat</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Atmospheric holiday cottage on Texel.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://boetjevanklemat.nl/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_ccfc78ee71d02dafed05c02f127f67f0.setContent(html_993f8536ee89969751af1221625634d1);
+            
+        
+
+        marker_7b7004bee936f66197c1830a54ec9ce5.bindPopup(popup_ccfc78ee71d02dafed05c02f127f67f0)
+        ;
+
+        
+    
+    
+            feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+        
+    
+            var feature_group_8da1c85d4dc3fd1696af3c40e70b9a63 = L.featureGroup(
+                {}
+            );
+        
+    
+            var marker_239acf35007b534c2be32b33c3fcdfa7 = L.marker(
+                [53.1426663, 4.8800564],
+                {}
+            ).addTo(feature_group_8da1c85d4dc3fd1696af3c40e70b9a63);
+        
+    
+            var icon_dfae76c377492919ddf1eaef936e6341 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "binoculars", "iconColor": "white", "markerColor": "green", "prefix": "fa"}
+            );
+            marker_239acf35007b534c2be32b33c3fcdfa7.setIcon(icon_dfae76c377492919ddf1eaef936e6341);
+        
+    
+        var popup_04ca670a8136b89aa98237eb54a4025a = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_dba72252ed77d12050c834f066aeb8cf = $(`<div id="html_dba72252ed77d12050c834f066aeb8cf" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Vogelkijkscherm Dorpzicht</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Vogelkijkhut voor het spotten van lokale weidevogels.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Hoofdweg 130, 1795 LG De Cocksdorp, Texel</p>                 <a href="https://vogelkijkhut.nl/view/677/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Dorpzicht Bird Hide</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Bird watching hide for spotting local birds.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Hoofdweg 130, 1795 LG De Cocksdorp, Texel</p>                 <a href="https://vogelkijkhut.nl/view/677/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_04ca670a8136b89aa98237eb54a4025a.setContent(html_dba72252ed77d12050c834f066aeb8cf);
+            
+        
+
+        marker_239acf35007b534c2be32b33c3fcdfa7.bindPopup(popup_04ca670a8136b89aa98237eb54a4025a)
+        ;
+
+        
+    
+    
+            feature_group_8da1c85d4dc3fd1696af3c40e70b9a63.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+        
+</script>
+</html>
