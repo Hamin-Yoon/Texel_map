@@ -12,7 +12,7 @@ def geocode_addresses(df):
     """Fills in missing latitude and longitude using geopy."""
     geolocator = Nominatim(user_agent="texel_map_builder")
     # Rate limiter ensures we respect OpenStreetMap free service limits (1 sec delay)
-    geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
+    geocode = RateLimiter(geolocator.geocode, min_delay_seconds=0.1)
     
     updated = False
     for index, row in df.iterrows():
@@ -63,18 +63,9 @@ def build_map():
     # 2. Base Map centered on Texel
     texel_map = folium.Map(
         location=[53.0583, 4.8018], 
-        zoom_start=12, 
+        zoom_start=11, 
         tiles="CartoDB positron"
     )
-
-    # 3. Color Palette & Category Config
-    category_colors = {
-        'Galerieën': 'purple',
-        'Natuur': 'green',
-        'Bezienswaardigheden': 'red',
-        'Restaurants': 'orange',
-        'Sport & Cultuur': 'blue'
-    }
 
     # 4. Create Dynamic Categories (Feature Groups) FIRST
     categories = df['category'].dropna().unique()
@@ -84,6 +75,34 @@ def build_map():
         fg = FeatureGroup(name=cat)
         fg.add_to(texel_map)
         feature_groups[cat] = fg
+
+    import json
+    try:
+        with open("biodiversity_data.json", "r") as f:
+            bio_data = json.load(f)
+            top_n_crs = bio_data["top_n_crs"]
+            top_n_div = bio_data["top_n_div"]
+    except FileNotFoundError:
+        top_n_crs, top_n_div = {}, {}
+
+    bio_layer = folium.FeatureGroup(name="Biodiversity Intensity", show=False)
+
+    for idx_str, coords in top_n_crs.items():
+        score = top_n_div[idx_str] 
+        lon, lat = coords[0], coords[1]
+        folium.CircleMarker(
+            location=[lat, lon],
+            radius=score * 1.5,       
+            color="crimson",
+            fill=True,
+            fill_color="red",
+            fill_opacity=0.6,
+            popup=f"<b>Biodiversity Spot</b><br>Unique Species: {score}"
+        ).add_to(bio_layer)
+
+    bio_layer.add_to(texel_map)
+    # ADD IT TO THE DICTIONARY SO THE BUTTON LOOP SEES IT
+    feature_groups["Biodiversity Intensity"] = bio_layer
 
     route_fg = FeatureGroup(name="Route Suggestie")
     route_fg.add_to(texel_map)
@@ -109,32 +128,59 @@ def build_map():
         tooltip="Suggested Route"
     ).add_to(route_fg)
 
+    category_config = {
+                'Galerieën': {'color': 'purple', 'icon': 'palette', 'prefix': 'fa'},
+                'Gallery-route1': {'color': 'darkpurple', 'icon': 'route', 'prefix': 'fa'},
+                'boetje': {'color': 'orange', 'icon': 'home', 'prefix': 'fa'},
+                'vogelkijkpunt': {'color': 'green', 'icon': 'binoculars', 'prefix': 'fa'},
+                'Natuur': {'color': 'darkgreen', 'icon': 'tree', 'prefix': 'fa'},
+                'Bezienswaardigheden': {'color': 'red', 'icon': 'camera', 'prefix': 'fa'}
+            }
+    folium_to_css = {
+        'purple': '#d9534f', 'darkpurple': '#5B396B', 'orange': '#F39C12',
+        'green': '#72B026', 'darkgreen': '#728224', 'red': '#D33D2A',
+        'blue': '#38AADD', 'cadetblue': '#436978'
+    }
     # 5. Build HTML Buttons and JavaScript Dynamically via Python
     buttons_html = ""
     js_clicks = ""
     map_id = texel_map.get_name() # Gets Folium's internal JS map variable
-
+    category_translations = {
+        "Galerieën": "Galleries",
+        "Gallery-route1": "Gallery Route 1",
+        "boetje": "Sheep Barns",
+        "vogelkijkpunt": "Bird Observatories",
+        "Route Suggestie": "Suggested Route",
+        "Biodiversity Intensity": "Biodiversity"
+    }
     for cat, fg in feature_groups.items():
         layer_id = fg.get_name() # Gets Folium's internal JS layer variable
-        
-        # Create a button for each category
+        cat_en = category_translations.get(cat, cat)
+        config = category_config.get(cat, {'color': 'cadetblue', 'icon': 'circle', 'prefix': 'fa'})
+        btn_color = folium_to_css.get(config['color'], '#38AADD')
         buttons_html += f'''
-        <button id="btn_{layer_id}" class="cat-btn">
-          <i class="fa-solid fa-eye"></i> {cat}
+        <button id="btn_{layer_id}" class="cat-btn active" style="border-left: 4px solid {btn_color};">
+            <i class="fa-solid fa-{config['icon']}" style="color: {btn_color}; width: 22px; text-align: center; font-size: 14px;"></i> 
+            <span class="lang-nl" style="flex-grow: 1; margin-left: 5px;">{cat}</span>
+            <span class="lang-en" style="flex-grow: 1; margin-left: 5px;">{cat_en}</span>
+            <i class="fa-solid fa-toggle-on toggle-icon" style="color: #28a745; font-size: 18px;"></i>
         </button>
         '''
         
         # Write the JS to toggle this exact layer
         js_clicks += f'''
         document.getElementById("btn_{layer_id}").onclick = function() {{
+            let toggleIcon = this.querySelector('.toggle-icon');
             if ({map_id}.hasLayer({layer_id})) {{
                 {map_id}.removeLayer({layer_id});
                 this.classList.add('inactive');
-                this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> {cat}';
+                toggleIcon.className = "fa-solid fa-toggle-off toggle-icon";
+                toggleIcon.style.color = "#ccc";
             }} else {{
                 {map_id}.addLayer({layer_id});
                 this.classList.remove('inactive');
-                this.innerHTML = '<i class="fa-solid fa-eye"></i> {cat}';
+                toggleIcon.className = "fa-solid fa-toggle-on toggle-icon";
+                toggleIcon.style.color = "#28a745";
             }}
         }};
         '''
@@ -147,6 +193,9 @@ def build_map():
       body.lang-nl .content-en { display: none; }
       body.lang-en .content-nl { display: none; }
       body.lang-en .content-en { display: block; }
+      /* New rules for the menu buttons */
+      body.lang-nl .lang-en { display: none !important; }
+      body.lang-en .lang-nl { display: none !important; }
       .category-panel { position: absolute; top: 20px; left: 60px; z-index: 9999; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); font-family: sans-serif; min-width: 180px; max-width: 250px; }
       .category-panel h4 { margin: 0 0 10px 0; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
       .cat-btn { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; margin-bottom: 6px; border: 1px solid #007bff; border-radius: 5px; background: #e7f1ff; color: #007bff; cursor: pointer; font-size: 12px; font-weight: bold; text-align: left; transition: all 0.2s; }
@@ -193,7 +242,6 @@ def build_map():
             continue # Skip if geocoding failed
 
         cat = row['category']
-        color = category_colors.get(cat, 'cadetblue')
         website_url = row['website'] if pd.notna(row['website']) else "#"
 
         popup_html = f"""
@@ -212,14 +260,7 @@ def build_map():
             </div>
         </div>
         """
-        category_config = {
-            'Galerieën': {'color': 'purple', 'icon': 'palette', 'prefix': 'fa'},
-            'Gallery-route1': {'color': 'darkpurple', 'icon': 'route', 'prefix': 'fa'},
-            'boetje': {'color': 'orange', 'icon': 'home', 'prefix': 'fa'},
-            'vogelkijkpunt': {'color': 'green', 'icon': 'binoculars', 'prefix': 'fa'},
-            'Natuur': {'color': 'darkgreen', 'icon': 'tree', 'prefix': 'fa'},
-            'Bezienswaardigheden': {'color': 'red', 'icon': 'camera', 'prefix': 'fa'}
-        }
+        
 
 # 2. Inside your loop, pull these styling options dynamically:
         config = category_config.get(cat, {'color': 'blue', 'icon': 'info-circle', 'prefix': 'fa'})
@@ -263,9 +304,8 @@ def build_map():
 
     # 1. Add the filled layer to the map
     bio_layer.add_to(texel_map)
+    # feature_groups["Biodiversity Intensity"] = bio_layer
 
-    # 2. Add the native top-right checkbox control
-    folium.LayerControl(position='topright').add_to(texel_map)
     # 8. Save output
     texel_map.save("texel_map.html")
     print("Successfully generated texel_map.html!")
