@@ -4,6 +4,9 @@ import pandas as pd
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 import time
+import gpxpy
+import gpxpy.gpx
+import json
 
 def geocode_addresses(df):
     """Fills in missing latitude and longitude using geopy."""
@@ -38,10 +41,25 @@ def geocode_addresses(df):
     return df
 
 def build_map():
-    # 1. Load Data
-    df = pd.read_csv("places.csv")
-    df = geocode_addresses(df)
+    # 1. Load Data from Google Sheets
+    # Change '/edit?gid=' to '/export?format=csv&gid='
+    sheet_url = "https://docs.google.com/spreadsheets/d/1qEE9cMS7sf_Apa-tP8KOQt81zJhOpeu_L2RxPYZov1Q/export?format=csv&gid=716767332"
+    df = pd.read_csv(sheet_url)
 
+    # 1b. Automatically fill in missing columns with empty data so the script doesn't crash
+    missing_columns = ['latitude', 'longitude', 'description_nl', 'description_en', 'name_nl', 'name_en']
+    for col in missing_columns:
+        if col not in df.columns:
+            df[col] = pd.NA
+            
+    # 1c. Fallback: Use the basic 'name' column for both NL and EN popups if they are empty
+    if 'name' in df.columns:
+        df['name_nl'] = df['name_nl'].fillna(df['name'])
+        df['name_en'] = df['name_en'].fillna(df['name'])
+
+    # The geocoder will now see the empty 'latitude'/'longitude' columns and fill them!
+    df = geocode_addresses(df)
+    
     # 2. Base Map centered on Texel
     texel_map = folium.Map(
         location=[53.0583, 4.8018], 
@@ -66,6 +84,30 @@ def build_map():
         fg = FeatureGroup(name=cat)
         fg.add_to(texel_map)
         feature_groups[cat] = fg
+
+    route_fg = FeatureGroup(name="Route Suggestie")
+    route_fg.add_to(texel_map)
+    feature_groups["Route Suggestie"] = route_fg # Adds it to your custom UI menu
+
+    # 2. Parse the GPX file
+    with open('route.gpx', 'r') as gpx_file:
+        gpx = gpxpy.parse(gpx_file)
+
+    # 3. Extract the coordinates
+    points = []
+    for track in gpx.tracks:
+        for segment in track.segments:
+            for point in segment.points:
+                points.append(tuple([point.latitude, point.longitude]))
+
+    # 4. Draw the line on the map
+    folium.PolyLine(
+        locations=points,
+        color="blue",
+        weight=5,
+        opacity=0.7,
+        tooltip="Suggested Route"
+    ).add_to(route_fg)
 
     # 5. Build HTML Buttons and JavaScript Dynamically via Python
     buttons_html = ""
@@ -192,7 +234,38 @@ def build_map():
             )
         ).add_to(feature_groups[cat])
 
-    
+    try:
+        with open("biodiversity_data.json", "r") as f:
+            bio_data = json.load(f)
+            top_n_crs = bio_data["top_n_crs"]
+            top_n_div = bio_data["top_n_div"]
+    except FileNotFoundError:
+        print("Warning: biodiversity_data.json not found. Run the sampler notebook first.")
+        top_n_crs, top_n_div = {}, {}
+    bio_layer = folium.FeatureGroup(name="Biodiversity Intensity", show=False)
+
+    # Loop through your Jupyter variables (top_n_crs and top_n_div)
+    for idx, coords in top_n_crs.items():
+        score = top_n_div[idx] # Get the unique species count for this grid cell
+        
+        # coords contains [longitude, latitude], but Folium requires [latitude, longitude]
+        lon, lat = coords[0], coords[1]
+        
+        folium.CircleMarker(
+            location=[lat, lon],
+            radius=score * 1.5,       # Adjust multiplier to make circle radius scale nicely
+            color="crimson",
+            fill=True,
+            fill_color="red",
+            fill_opacity=0.6,
+            popup=f"<b>Biodiversity Spot #{idx}</b><br>Unique Species: {score}"
+        ).add_to(bio_layer)
+
+    # 1. Add the filled layer to the map
+    bio_layer.add_to(texel_map)
+
+    # 2. Add the native top-right checkbox control
+    folium.LayerControl(position='topright').add_to(texel_map)
     # 8. Save output
     texel_map.save("texel_map.html")
     print("Successfully generated texel_map.html!")

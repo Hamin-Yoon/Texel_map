@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_c35ca8f6d66944e296568b12c9ae0d64 {
+                #map_e9061908c09256777070a3f648d0edc8 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -58,20 +58,24 @@
       <h4 class="content-en">Filter Categories</h4>
       <div id="category-buttons">
         
-        <button id="btn_feature_group_497adacc2c95ff280f8631c1d8b8e222" class="cat-btn">
+        <button id="btn_feature_group_58f12e525d7584613f6129c06ec55a24" class="cat-btn">
           <i class="fa-solid fa-eye"></i> Galerieën
         </button>
         
-        <button id="btn_feature_group_b963b83b7d7f416a9fcaaeff5f280aef" class="cat-btn">
+        <button id="btn_feature_group_145ac7c959e02905b5990971dc2f06c1" class="cat-btn">
           <i class="fa-solid fa-eye"></i> Gallery-route1
         </button>
         
-        <button id="btn_feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd" class="cat-btn">
+        <button id="btn_feature_group_1d11744a7448bac24b6bafc9d01c4485" class="cat-btn">
           <i class="fa-solid fa-eye"></i> boetje
         </button>
         
-        <button id="btn_feature_group_8da1c85d4dc3fd1696af3c40e70b9a63" class="cat-btn">
+        <button id="btn_feature_group_4f0852a23f54f31c6407c106e255ba86" class="cat-btn">
           <i class="fa-solid fa-eye"></i> vogelkijkpunt
+        </button>
+        
+        <button id="btn_feature_group_a341906501e905f5b899489576c79a92" class="cat-btn">
+          <i class="fa-solid fa-eye"></i> Route Suggestie
         </button>
         
       </div>
@@ -95,51 +99,63 @@
       window.addEventListener("load", function() {
         setTimeout(function() {
             
-        document.getElementById("btn_feature_group_497adacc2c95ff280f8631c1d8b8e222").onclick = function() {
-            if (map_c35ca8f6d66944e296568b12c9ae0d64.hasLayer(feature_group_497adacc2c95ff280f8631c1d8b8e222)) {
-                map_c35ca8f6d66944e296568b12c9ae0d64.removeLayer(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+        document.getElementById("btn_feature_group_58f12e525d7584613f6129c06ec55a24").onclick = function() {
+            if (map_e9061908c09256777070a3f648d0edc8.hasLayer(feature_group_58f12e525d7584613f6129c06ec55a24)) {
+                map_e9061908c09256777070a3f648d0edc8.removeLayer(feature_group_58f12e525d7584613f6129c06ec55a24);
                 this.classList.add('inactive');
                 this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Galerieën';
             } else {
-                map_c35ca8f6d66944e296568b12c9ae0d64.addLayer(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+                map_e9061908c09256777070a3f648d0edc8.addLayer(feature_group_58f12e525d7584613f6129c06ec55a24);
                 this.classList.remove('inactive');
                 this.innerHTML = '<i class="fa-solid fa-eye"></i> Galerieën';
             }
         };
         
-        document.getElementById("btn_feature_group_b963b83b7d7f416a9fcaaeff5f280aef").onclick = function() {
-            if (map_c35ca8f6d66944e296568b12c9ae0d64.hasLayer(feature_group_b963b83b7d7f416a9fcaaeff5f280aef)) {
-                map_c35ca8f6d66944e296568b12c9ae0d64.removeLayer(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+        document.getElementById("btn_feature_group_145ac7c959e02905b5990971dc2f06c1").onclick = function() {
+            if (map_e9061908c09256777070a3f648d0edc8.hasLayer(feature_group_145ac7c959e02905b5990971dc2f06c1)) {
+                map_e9061908c09256777070a3f648d0edc8.removeLayer(feature_group_145ac7c959e02905b5990971dc2f06c1);
                 this.classList.add('inactive');
                 this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Gallery-route1';
             } else {
-                map_c35ca8f6d66944e296568b12c9ae0d64.addLayer(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+                map_e9061908c09256777070a3f648d0edc8.addLayer(feature_group_145ac7c959e02905b5990971dc2f06c1);
                 this.classList.remove('inactive');
                 this.innerHTML = '<i class="fa-solid fa-eye"></i> Gallery-route1';
             }
         };
         
-        document.getElementById("btn_feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd").onclick = function() {
-            if (map_c35ca8f6d66944e296568b12c9ae0d64.hasLayer(feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd)) {
-                map_c35ca8f6d66944e296568b12c9ae0d64.removeLayer(feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd);
+        document.getElementById("btn_feature_group_1d11744a7448bac24b6bafc9d01c4485").onclick = function() {
+            if (map_e9061908c09256777070a3f648d0edc8.hasLayer(feature_group_1d11744a7448bac24b6bafc9d01c4485)) {
+                map_e9061908c09256777070a3f648d0edc8.removeLayer(feature_group_1d11744a7448bac24b6bafc9d01c4485);
                 this.classList.add('inactive');
                 this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> boetje';
             } else {
-                map_c35ca8f6d66944e296568b12c9ae0d64.addLayer(feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd);
+                map_e9061908c09256777070a3f648d0edc8.addLayer(feature_group_1d11744a7448bac24b6bafc9d01c4485);
                 this.classList.remove('inactive');
                 this.innerHTML = '<i class="fa-solid fa-eye"></i> boetje';
             }
         };
         
-        document.getElementById("btn_feature_group_8da1c85d4dc3fd1696af3c40e70b9a63").onclick = function() {
-            if (map_c35ca8f6d66944e296568b12c9ae0d64.hasLayer(feature_group_8da1c85d4dc3fd1696af3c40e70b9a63)) {
-                map_c35ca8f6d66944e296568b12c9ae0d64.removeLayer(feature_group_8da1c85d4dc3fd1696af3c40e70b9a63);
+        document.getElementById("btn_feature_group_4f0852a23f54f31c6407c106e255ba86").onclick = function() {
+            if (map_e9061908c09256777070a3f648d0edc8.hasLayer(feature_group_4f0852a23f54f31c6407c106e255ba86)) {
+                map_e9061908c09256777070a3f648d0edc8.removeLayer(feature_group_4f0852a23f54f31c6407c106e255ba86);
                 this.classList.add('inactive');
                 this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> vogelkijkpunt';
             } else {
-                map_c35ca8f6d66944e296568b12c9ae0d64.addLayer(feature_group_8da1c85d4dc3fd1696af3c40e70b9a63);
+                map_e9061908c09256777070a3f648d0edc8.addLayer(feature_group_4f0852a23f54f31c6407c106e255ba86);
                 this.classList.remove('inactive');
                 this.innerHTML = '<i class="fa-solid fa-eye"></i> vogelkijkpunt';
+            }
+        };
+        
+        document.getElementById("btn_feature_group_a341906501e905f5b899489576c79a92").onclick = function() {
+            if (map_e9061908c09256777070a3f648d0edc8.hasLayer(feature_group_a341906501e905f5b899489576c79a92)) {
+                map_e9061908c09256777070a3f648d0edc8.removeLayer(feature_group_a341906501e905f5b899489576c79a92);
+                this.classList.add('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Route Suggestie';
+            } else {
+                map_e9061908c09256777070a3f648d0edc8.addLayer(feature_group_a341906501e905f5b899489576c79a92);
+                this.classList.remove('inactive');
+                this.innerHTML = '<i class="fa-solid fa-eye"></i> Route Suggestie';
             }
         };
         
@@ -148,14 +164,14 @@
     </script>
     
     
-            <div class="folium-map" id="map_c35ca8f6d66944e296568b12c9ae0d64" ></div>
+            <div class="folium-map" id="map_e9061908c09256777070a3f648d0edc8" ></div>
         
 </body>
 <script>
     
     
-            var map_c35ca8f6d66944e296568b12c9ae0d64 = L.map(
-                "map_c35ca8f6d66944e296568b12c9ae0d64",
+            var map_e9061908c09256777070a3f648d0edc8 = L.map(
+                "map_e9061908c09256777070a3f648d0edc8",
                 {
                     center: [53.0583, 4.8018],
                     crs: L.CRS.EPSG3857,
@@ -169,369 +185,789 @@
 
         
     
-            var tile_layer_e040a1bbccf51e8591a5a5e161410426 = L.tileLayer(
+            var tile_layer_e5742273f6c591a568c2708618a85d07 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 20, "maxZoom": 20, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abcd", "tms": false}
             );
         
     
-            tile_layer_e040a1bbccf51e8591a5a5e161410426.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+            tile_layer_e5742273f6c591a568c2708618a85d07.addTo(map_e9061908c09256777070a3f648d0edc8);
         
     
-            var feature_group_497adacc2c95ff280f8631c1d8b8e222 = L.featureGroup(
+            var feature_group_58f12e525d7584613f6129c06ec55a24 = L.featureGroup(
                 {}
             );
         
     
-            var marker_68b7dc261fea4b92653524060fee9e8e = L.marker(
+            var marker_94c95f3c32c5f422348d5dcfa6b2400f = L.marker(
                 [53.0556526, 4.8060633],
                 {}
-            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+            ).addTo(feature_group_58f12e525d7584613f6129c06ec55a24);
         
     
-            var icon_66edbb532d1bbf25ce99d6b1f19a088f = L.AwesomeMarkers.icon(
+            var icon_c506752f94e3ff6336689052cf9204cc = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
             );
-            marker_68b7dc261fea4b92653524060fee9e8e.setIcon(icon_66edbb532d1bbf25ce99d6b1f19a088f);
+            marker_94c95f3c32c5f422348d5dcfa6b2400f.setIcon(icon_c506752f94e3ff6336689052cf9204cc);
         
     
-        var popup_001757c23c835ecd5e880ff78130b0ac = L.popup({"maxWidth": 300});
+        var popup_978ae36c2c42d01a8fbf9ac03a0e3ac7 = L.popup({"maxWidth": 300});
 
         
             
-                var html_7e1b57cb7e6287ae731a76d2ccdd2454 = $(`<div id="html_7e1b57cb7e6287ae731a76d2ccdd2454" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Atelier Galerie Texel Kunst - Angelina Stiehl</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Atelier en galerie van Angelina Stiehl.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Sluyscoog 79, 1791 WV Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Atelier Galerie Texel Kunst - Angelina Stiehl</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Studio and gallery of Angelina Stiehl.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Sluyscoog 79, 1791 WV Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_001757c23c835ecd5e880ff78130b0ac.setContent(html_7e1b57cb7e6287ae731a76d2ccdd2454);
+                var html_d4c79ea22f14251ec53a5877d3fad6bd = $(`<div id="html_d4c79ea22f14251ec53a5877d3fad6bd" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Atelier Galerie Texel Kunst - Angelina Stiehl</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Atelier en galerie van Angelina Stiehl.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Sluyscoog 79, 1791 WV Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Atelier Galerie Texel Kunst - Angelina Stiehl</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Studio and gallery of Angelina Stiehl.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Sluyscoog 79, 1791 WV Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_978ae36c2c42d01a8fbf9ac03a0e3ac7.setContent(html_d4c79ea22f14251ec53a5877d3fad6bd);
             
         
 
-        marker_68b7dc261fea4b92653524060fee9e8e.bindPopup(popup_001757c23c835ecd5e880ff78130b0ac)
+        marker_94c95f3c32c5f422348d5dcfa6b2400f.bindPopup(popup_978ae36c2c42d01a8fbf9ac03a0e3ac7)
         ;
 
         
     
     
-            var marker_e1758e78b996cc23c57fecb9eb21d8f6 = L.marker(
+            var marker_26f58dec590b70e1df72b747da1e9dbe = L.marker(
                 [53.1120129, 4.8199974],
                 {}
-            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+            ).addTo(feature_group_58f12e525d7584613f6129c06ec55a24);
         
     
-            var icon_00be38548590a50101bad2ace1ad707c = L.AwesomeMarkers.icon(
+            var icon_5f8800891c1230902a8651dccd6e4588 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
             );
-            marker_e1758e78b996cc23c57fecb9eb21d8f6.setIcon(icon_00be38548590a50101bad2ace1ad707c);
+            marker_26f58dec590b70e1df72b747da1e9dbe.setIcon(icon_5f8800891c1230902a8651dccd6e4588);
         
     
-        var popup_fc73d5a823a511fbc183071af5b9156b = L.popup({"maxWidth": 300});
+        var popup_8fa5cc6f7fb7de97b96482d5068b84a1 = L.popup({"maxWidth": 300});
 
         
             
-                var html_9c9cd98ecb327515924c1918ce364ae3 = $(`<div id="html_9c9cd98ecb327515924c1918ce364ae3" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">De Eiland Galerij</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Expositie keramiek in de beeldentuin.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Postweg 72, 1795 JR De Cocksdorp, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/keramiek-in-de-beeldentuin/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">De Eiland Galerij</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Ceramics exhibition in the sculpture garden.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Postweg 72, 1795 JR De Cocksdorp, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/keramiek-in-de-beeldentuin/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_fc73d5a823a511fbc183071af5b9156b.setContent(html_9c9cd98ecb327515924c1918ce364ae3);
+                var html_83e8df857d6938e3dc7cecf47c4668c1 = $(`<div id="html_83e8df857d6938e3dc7cecf47c4668c1" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">De Eiland Galerij</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Expositie keramiek in de beeldentuin.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Postweg 72, 1795 JR De Cocksdorp, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/keramiek-in-de-beeldentuin/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">De Eiland Galerij</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Ceramics exhibition in the sculpture garden.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Postweg 72, 1795 JR De Cocksdorp, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/keramiek-in-de-beeldentuin/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_8fa5cc6f7fb7de97b96482d5068b84a1.setContent(html_83e8df857d6938e3dc7cecf47c4668c1);
             
         
 
-        marker_e1758e78b996cc23c57fecb9eb21d8f6.bindPopup(popup_fc73d5a823a511fbc183071af5b9156b)
+        marker_26f58dec590b70e1df72b747da1e9dbe.bindPopup(popup_8fa5cc6f7fb7de97b96482d5068b84a1)
         ;
 
         
     
     
-            var marker_1916f4a1a151c4efce66a66e0867b31e = L.marker(
+            var marker_827c27ebf69c8c3750861315ebd81256 = L.marker(
                 [53.0200623, 4.7557992],
                 {}
-            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+            ).addTo(feature_group_58f12e525d7584613f6129c06ec55a24);
         
     
-            var icon_ad5bf311cfcd4af11159946e40bd4c5a = L.AwesomeMarkers.icon(
+            var icon_3a03595bced56d7740f2ec9fb8e22e66 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
             );
-            marker_1916f4a1a151c4efce66a66e0867b31e.setIcon(icon_ad5bf311cfcd4af11159946e40bd4c5a);
+            marker_827c27ebf69c8c3750861315ebd81256.setIcon(icon_3a03595bced56d7740f2ec9fb8e22e66);
         
     
-        var popup_a9988deb753be31b73b82c04c59f5df4 = L.popup({"maxWidth": 300});
+        var popup_fc06f239780ed86b0d36d608dcc385a1 = L.popup({"maxWidth": 300});
 
         
             
-                var html_225a86e819cbbee4a57ff354b167953c = $(`<div id="html_225a86e819cbbee4a57ff354b167953c" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Wieg Kunst</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Wieg kunst expositie in traditionele schapenboet.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wieg-kunst-in-schapenboet/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Cradle Art</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Cradle art exhibition in a traditional sheep barn.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wieg-kunst-in-schapenboet/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_a9988deb753be31b73b82c04c59f5df4.setContent(html_225a86e819cbbee4a57ff354b167953c);
+                var html_e6b6de8a09d545211c7479d04430446a = $(`<div id="html_e6b6de8a09d545211c7479d04430446a" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Wieg Kunst</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Wieg kunst expositie in traditionele schapenboet.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wieg-kunst-in-schapenboet/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Cradle Art</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Cradle art exhibition in a traditional sheep barn.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wieg-kunst-in-schapenboet/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_fc06f239780ed86b0d36d608dcc385a1.setContent(html_e6b6de8a09d545211c7479d04430446a);
             
         
 
-        marker_1916f4a1a151c4efce66a66e0867b31e.bindPopup(popup_a9988deb753be31b73b82c04c59f5df4)
+        marker_827c27ebf69c8c3750861315ebd81256.bindPopup(popup_fc06f239780ed86b0d36d608dcc385a1)
         ;
 
         
     
     
-            var marker_a9efe7244d9578d6c81aca0275b57a10 = L.marker(
+            var marker_7388819d0d999252ec432eaae97c0303 = L.marker(
                 [53.0850138, 4.8736891],
                 {}
-            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+            ).addTo(feature_group_58f12e525d7584613f6129c06ec55a24);
         
     
-            var icon_1892862007b8efaaa46a817395111e16 = L.AwesomeMarkers.icon(
+            var icon_81cbc2b6df2360cb014ec7081737c119 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
             );
-            marker_a9efe7244d9578d6c81aca0275b57a10.setIcon(icon_1892862007b8efaaa46a817395111e16);
+            marker_7388819d0d999252ec432eaae97c0303.setIcon(icon_81cbc2b6df2360cb014ec7081737c119);
         
     
-        var popup_c76d68baf10386accfa823905f5c038c = L.popup({"maxWidth": 300});
+        var popup_c4755e1cfede82889e85450f87b92f80 = L.popup({"maxWidth": 300});
 
         
             
-                var html_51e8335ad834433fe1b381d54e25b3c3 = $(`<div id="html_51e8335ad834433fe1b381d54e25b3c3" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Wolkathedraal</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Bijzondere kunstexpositie van wol in Oosterend.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Peperstraat 7, 1793 AA Oosterend, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wolkathedraal/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Wool Cathedral</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Unique wool art exhibition in Oosterend.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Peperstraat 7, 1793 AA Oosterend, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wolkathedraal/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_c76d68baf10386accfa823905f5c038c.setContent(html_51e8335ad834433fe1b381d54e25b3c3);
+                var html_d4d8e923dd13da3c02c020150b65b1eb = $(`<div id="html_d4d8e923dd13da3c02c020150b65b1eb" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Wolkathedraal</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Bijzondere kunstexpositie van wol in Oosterend.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Peperstraat 7, 1793 AA Oosterend, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wolkathedraal/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Wool Cathedral</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Unique wool art exhibition in Oosterend.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Peperstraat 7, 1793 AA Oosterend, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/wolkathedraal/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_c4755e1cfede82889e85450f87b92f80.setContent(html_d4d8e923dd13da3c02c020150b65b1eb);
             
         
 
-        marker_a9efe7244d9578d6c81aca0275b57a10.bindPopup(popup_c76d68baf10386accfa823905f5c038c)
+        marker_7388819d0d999252ec432eaae97c0303.bindPopup(popup_c4755e1cfede82889e85450f87b92f80)
         ;
 
         
     
     
-            var marker_f266c12091b7bfa8e7cd7d4cf8ff82da = L.marker(
+            var marker_9e3efffdb6717a593ce3ac6901c115e0 = L.marker(
                 [53.0972392, 4.7613086],
                 {}
-            ).addTo(feature_group_497adacc2c95ff280f8631c1d8b8e222);
+            ).addTo(feature_group_58f12e525d7584613f6129c06ec55a24);
         
     
-            var icon_1818eb8894794d44ea55fe64a032ab6f = L.AwesomeMarkers.icon(
+            var icon_8aa92e43518445d0f44aa691f1352728 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "palette", "iconColor": "white", "markerColor": "purple", "prefix": "fa"}
             );
-            marker_f266c12091b7bfa8e7cd7d4cf8ff82da.setIcon(icon_1818eb8894794d44ea55fe64a032ab6f);
+            marker_9e3efffdb6717a593ce3ac6901c115e0.setIcon(icon_8aa92e43518445d0f44aa691f1352728);
         
     
-        var popup_53494b5088c5c7ea57e7fcda687c8184 = L.popup({"maxWidth": 300});
+        var popup_6eb1a0e72e9ebb88eb1bfdfad2c2b1ee = L.popup({"maxWidth": 300});
 
         
             
-                var html_9d213c09aeac7e9e9489c78ffd13f3e6 = $(`<div id="html_9d213c09aeac7e9e9489c78ffd13f3e6" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Expositie Texels Landschap</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Expositie van het Texelse landschap bij Galerie Posthuys.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Brink 14, 1796 AJ De Koog, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/posthuys-expositie-texels-landschap/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Texel Landscape Exhibition</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Exhibition of the Texel landscape at Galerie Posthuys.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Brink 14, 1796 AJ De Koog, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/posthuys-expositie-texels-landschap/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_53494b5088c5c7ea57e7fcda687c8184.setContent(html_9d213c09aeac7e9e9489c78ffd13f3e6);
+                var html_5fc1de9381d749010b7779d00c6da052 = $(`<div id="html_5fc1de9381d749010b7779d00c6da052" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Expositie Texels Landschap</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Expositie van het Texelse landschap bij Galerie Posthuys.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Brink 14, 1796 AJ De Koog, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/posthuys-expositie-texels-landschap/?startDate=2026-08-19" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Texel Landscape Exhibition</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Exhibition of the Texel landscape at Galerie Posthuys.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Brink 14, 1796 AJ De Koog, Texel</p>                 <a href="https://www.texel.net/nl/activiteit/posthuys-expositie-texels-landschap/?startDate=2026-08-19" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_6eb1a0e72e9ebb88eb1bfdfad2c2b1ee.setContent(html_5fc1de9381d749010b7779d00c6da052);
             
         
 
-        marker_f266c12091b7bfa8e7cd7d4cf8ff82da.bindPopup(popup_53494b5088c5c7ea57e7fcda687c8184)
+        marker_9e3efffdb6717a593ce3ac6901c115e0.bindPopup(popup_6eb1a0e72e9ebb88eb1bfdfad2c2b1ee)
         ;
 
         
     
     
-            feature_group_497adacc2c95ff280f8631c1d8b8e222.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+            feature_group_58f12e525d7584613f6129c06ec55a24.addTo(map_e9061908c09256777070a3f648d0edc8);
         
     
-            var feature_group_b963b83b7d7f416a9fcaaeff5f280aef = L.featureGroup(
+            var feature_group_145ac7c959e02905b5990971dc2f06c1 = L.featureGroup(
                 {}
             );
         
     
-            var marker_ec86065ad9bfdfd1e1d290fc5aacb89a = L.marker(
+            var marker_5cad792887167bf66ff805b8cd93db12 = L.marker(
                 [53.0662304, 4.7850184],
                 {}
-            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+            ).addTo(feature_group_145ac7c959e02905b5990971dc2f06c1);
         
     
-            var icon_2e363c0187b5a1a5e53048927e35e106 = L.AwesomeMarkers.icon(
+            var icon_d2cdf4c0d381d0867ba9f515bc695592 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
             );
-            marker_ec86065ad9bfdfd1e1d290fc5aacb89a.setIcon(icon_2e363c0187b5a1a5e53048927e35e106);
+            marker_5cad792887167bf66ff805b8cd93db12.setIcon(icon_d2cdf4c0d381d0867ba9f515bc695592);
         
     
-        var popup_ccd612b62f39eded613065706436de4c = L.popup({"maxWidth": 300});
+        var popup_8298223034c5a60e356f352454124a74 = L.popup({"maxWidth": 300});
 
         
             
-                var html_89702f4208690b80f33ef54567b9f71e = $(`<div id="html_89702f4208690b80f33ef54567b9f71e" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">01 QUUB</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo juni/aug/sept 12.00-16.00, of op afspraak.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Kogerweg 145, 1791 MJ Den Burg, Texel</p>                 <a href="https://www.quubkunst.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">01 QUUB</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed June/Aug/Sept 12:00-16:00, or by appointment.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Kogerweg 145, 1791 MJ Den Burg, Texel</p>                 <a href="https://www.quubkunst.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_ccd612b62f39eded613065706436de4c.setContent(html_89702f4208690b80f33ef54567b9f71e);
+                var html_3d1892c49fd5ef4ce899aeb12d7b06df = $(`<div id="html_3d1892c49fd5ef4ce899aeb12d7b06df" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">01 QUUB</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo juni/aug/sept 12.00-16.00, of op afspraak.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Kogerweg 145, 1791 MJ Den Burg, Texel</p>                 <a href="https://www.quubkunst.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">01 QUUB</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed June/Aug/Sept 12:00-16:00, or by appointment.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Kogerweg 145, 1791 MJ Den Burg, Texel</p>                 <a href="https://www.quubkunst.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_8298223034c5a60e356f352454124a74.setContent(html_3d1892c49fd5ef4ce899aeb12d7b06df);
             
         
 
-        marker_ec86065ad9bfdfd1e1d290fc5aacb89a.bindPopup(popup_ccd612b62f39eded613065706436de4c)
+        marker_5cad792887167bf66ff805b8cd93db12.bindPopup(popup_8298223034c5a60e356f352454124a74)
         ;
 
         
     
     
-            var marker_995d159c6043b4f26db20e125eb16a50 = L.marker(
+            var marker_b8dd31886122b70b7b92ed3dce806e3a = L.marker(
                 [53.0550153, 4.7982876],
                 {}
-            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+            ).addTo(feature_group_145ac7c959e02905b5990971dc2f06c1);
         
     
-            var icon_b41ffdf222656f18a2ea43accffa78c6 = L.AwesomeMarkers.icon(
+            var icon_a481e128be0f0b52d1d4f786cb1a9797 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
             );
-            marker_995d159c6043b4f26db20e125eb16a50.setIcon(icon_b41ffdf222656f18a2ea43accffa78c6);
+            marker_b8dd31886122b70b7b92ed3dce806e3a.setIcon(icon_a481e128be0f0b52d1d4f786cb1a9797);
         
     
-        var popup_613330716242375be62b24ee429821f8 = L.popup({"maxWidth": 300});
+        var popup_bddc3c0060ee58fdc295b949b8168ac2 = L.popup({"maxWidth": 300});
 
         
             
-                var html_fce0cb66414a0451be12217df1ed6409 = $(`<div id="html_fce0cb66414a0451be12217df1ed6409" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">03 MUSEUM GALERIE RAT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: Jaarrond wo-za 11.00-17.00, of op afspraak.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Burgwal 20, 1791 AJ Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">03 MUSEUM GALLERY RAT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Year-round Wed-Sat 11:00-17:00, or by appointment.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Burgwal 20, 1791 AJ Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_613330716242375be62b24ee429821f8.setContent(html_fce0cb66414a0451be12217df1ed6409);
+                var html_ded64389a9191f355cd20d6c2bd1058a = $(`<div id="html_ded64389a9191f355cd20d6c2bd1058a" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">03 MUSEUM GALERIE RAT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: Jaarrond wo-za 11.00-17.00, of op afspraak.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Burgwal 20, 1791 AJ Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">03 MUSEUM GALLERY RAT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Year-round Wed-Sat 11:00-17:00, or by appointment.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Burgwal 20, 1791 AJ Den Burg, Texel</p>                 <a href="https://www.texel.net/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_bddc3c0060ee58fdc295b949b8168ac2.setContent(html_ded64389a9191f355cd20d6c2bd1058a);
             
         
 
-        marker_995d159c6043b4f26db20e125eb16a50.bindPopup(popup_613330716242375be62b24ee429821f8)
+        marker_b8dd31886122b70b7b92ed3dce806e3a.bindPopup(popup_bddc3c0060ee58fdc295b949b8168ac2)
         ;
 
         
     
     
-            var marker_81051e276a023f5c4357233b4ad2bdad = L.marker(
+            var marker_43cee742b3283c3ea6887a6763f200ec = L.marker(
                 [53.053279, 4.7989449],
                 {}
-            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+            ).addTo(feature_group_145ac7c959e02905b5990971dc2f06c1);
         
     
-            var icon_49b63a3f24268e577f4b9770ed04482a = L.AwesomeMarkers.icon(
+            var icon_be0eb55758405f9f07bcc593967016b2 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
             );
-            marker_81051e276a023f5c4357233b4ad2bdad.setIcon(icon_49b63a3f24268e577f4b9770ed04482a);
+            marker_43cee742b3283c3ea6887a6763f200ec.setIcon(icon_be0eb55758405f9f07bcc593967016b2);
         
     
-        var popup_709f30fa4273e57ce0e6de70d85548b0 = L.popup({"maxWidth": 300});
+        var popup_84c5af545f759c713b6bf2a8d9cfee34 = L.popup({"maxWidth": 300});
 
         
             
-                var html_dba9307912d10a3cfb7fedb1837c889d = $(`<div id="html_dba9307912d10a3cfb7fedb1837c889d" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">05 INA VADER</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo 11.00-16.00, of op afspraak.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Warmoesstraat 52, 1791 CS Den Burg, Texel</p>                 <a href="https://www.inavader.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">05 INA VADER</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed 11:00-16:00, or by appointment.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Warmoesstraat 52, 1791 CS Den Burg, Texel</p>                 <a href="https://www.inavader.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_709f30fa4273e57ce0e6de70d85548b0.setContent(html_dba9307912d10a3cfb7fedb1837c889d);
+                var html_ecbd060aa56c5c37b3d6cd45554afd7a = $(`<div id="html_ecbd060aa56c5c37b3d6cd45554afd7a" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">05 INA VADER</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo 11.00-16.00, of op afspraak.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Warmoesstraat 52, 1791 CS Den Burg, Texel</p>                 <a href="https://www.inavader.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">05 INA VADER</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed 11:00-16:00, or by appointment.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Warmoesstraat 52, 1791 CS Den Burg, Texel</p>                 <a href="https://www.inavader.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_84c5af545f759c713b6bf2a8d9cfee34.setContent(html_ecbd060aa56c5c37b3d6cd45554afd7a);
             
         
 
-        marker_81051e276a023f5c4357233b4ad2bdad.bindPopup(popup_709f30fa4273e57ce0e6de70d85548b0)
+        marker_43cee742b3283c3ea6887a6763f200ec.bindPopup(popup_84c5af545f759c713b6bf2a8d9cfee34)
         ;
 
         
     
     
-            var marker_db6e0debdd2e0cd195eaf7ea10c56061 = L.marker(
+            var marker_e12c0a9aa2eceffa19ddf8160640a430 = L.marker(
                 [53.0538723, 4.7987451],
                 {}
-            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+            ).addTo(feature_group_145ac7c959e02905b5990971dc2f06c1);
         
     
-            var icon_326e011b8ae173bbba25c0c854e33001 = L.AwesomeMarkers.icon(
+            var icon_ee6a58f59c892773918f213c630c1b83 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
             );
-            marker_db6e0debdd2e0cd195eaf7ea10c56061.setIcon(icon_326e011b8ae173bbba25c0c854e33001);
+            marker_e12c0a9aa2eceffa19ddf8160640a430.setIcon(icon_ee6a58f59c892773918f213c630c1b83);
         
     
-        var popup_d1a99a47aa9dac221882be6d217d19bc = L.popup({"maxWidth": 300});
+        var popup_8d0299c895060d69b8a15e9fa8da4db8 = L.popup({"maxWidth": 300});
 
         
             
-                var html_849d615924a5482248a3043c7bc569b9 = $(`<div id="html_849d615924a5482248a3043c7bc569b9" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">06 ZOUT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo april-sept vanaf 12.00. Kunst-etage dagelijks open tijdens openingstijden Public Grill.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Parkstraat 32-34, 1791 BA Den Burg, Texel</p>                 <a href="https://www.zouttexel.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">06 ZOUT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed April-Sept from 12:00. Art floor open daily during Public Grill opening hours.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Parkstraat 32-34, 1791 BA Den Burg, Texel</p>                 <a href="https://www.zouttexel.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_d1a99a47aa9dac221882be6d217d19bc.setContent(html_849d615924a5482248a3043c7bc569b9);
+                var html_935e1d6732ebde734c55944169adaab9 = $(`<div id="html_935e1d6732ebde734c55944169adaab9" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">06 ZOUT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo april-sept vanaf 12.00. Kunst-etage dagelijks open tijdens openingstijden Public Grill.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Parkstraat 32-34, 1791 BA Den Burg, Texel</p>                 <a href="https://www.zouttexel.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">06 ZOUT</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed April-Sept from 12:00. Art floor open daily during Public Grill opening hours.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Parkstraat 32-34, 1791 BA Den Burg, Texel</p>                 <a href="https://www.zouttexel.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_8d0299c895060d69b8a15e9fa8da4db8.setContent(html_935e1d6732ebde734c55944169adaab9);
             
         
 
-        marker_db6e0debdd2e0cd195eaf7ea10c56061.bindPopup(popup_d1a99a47aa9dac221882be6d217d19bc)
+        marker_e12c0a9aa2eceffa19ddf8160640a430.bindPopup(popup_8d0299c895060d69b8a15e9fa8da4db8)
         ;
 
         
     
     
-            var marker_b4553d3921e85ce918fd551ab83dcf14 = L.marker(
+            var marker_a9c02d810fc9404495dff1983d4ba019 = L.marker(
                 [53.0536432, 4.8021295],
                 {}
-            ).addTo(feature_group_b963b83b7d7f416a9fcaaeff5f280aef);
+            ).addTo(feature_group_145ac7c959e02905b5990971dc2f06c1);
         
     
-            var icon_8e47c137f355b593aef919ef23f75f18 = L.AwesomeMarkers.icon(
+            var icon_ed9d378870aa65c781229ea9fd6ac024 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "route", "iconColor": "white", "markerColor": "darkpurple", "prefix": "fa"}
             );
-            marker_b4553d3921e85ce918fd551ab83dcf14.setIcon(icon_8e47c137f355b593aef919ef23f75f18);
+            marker_a9c02d810fc9404495dff1983d4ba019.setIcon(icon_ed9d378870aa65c781229ea9fd6ac024);
         
     
-        var popup_aec56a5be9098ca6ac293275803f8a95 = L.popup({"maxWidth": 300});
+        var popup_8f9bb491011a3cde2ecda0db7b6fe5b4 = L.popup({"maxWidth": 300});
 
         
             
-                var html_56e757327308854a9d75b7f432f8d0a3 = $(`<div id="html_56e757327308854a9d75b7f432f8d0a3" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">07 MARGOT BIK</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo april-sept 10.30-13.30.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Wilhelminalaan 23, 1791 AL Den Burg, Texel</p>                 <a href="https://www.bikart.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">07 MARGOT BIK</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed April-Sept 10:30-13:30.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Wilhelminalaan 23, 1791 AL Den Burg, Texel</p>                 <a href="https://www.bikart.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_aec56a5be9098ca6ac293275803f8a95.setContent(html_56e757327308854a9d75b7f432f8d0a3);
+                var html_09ca2643c9e21726ae54c0d79fcf8474 = $(`<div id="html_09ca2643c9e21726ae54c0d79fcf8474" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">07 MARGOT BIK</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Geopend: wo april-sept 10.30-13.30.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Wilhelminalaan 23, 1791 AL Den Burg, Texel</p>                 <a href="https://www.bikart.nl" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">07 MARGOT BIK</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Open: Wed April-Sept 10:30-13:30.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Wilhelminalaan 23, 1791 AL Den Burg, Texel</p>                 <a href="https://www.bikart.nl" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_8f9bb491011a3cde2ecda0db7b6fe5b4.setContent(html_09ca2643c9e21726ae54c0d79fcf8474);
             
         
 
-        marker_b4553d3921e85ce918fd551ab83dcf14.bindPopup(popup_aec56a5be9098ca6ac293275803f8a95)
+        marker_a9c02d810fc9404495dff1983d4ba019.bindPopup(popup_8f9bb491011a3cde2ecda0db7b6fe5b4)
         ;
 
         
     
     
-            feature_group_b963b83b7d7f416a9fcaaeff5f280aef.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+            feature_group_145ac7c959e02905b5990971dc2f06c1.addTo(map_e9061908c09256777070a3f648d0edc8);
         
     
-            var feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd = L.featureGroup(
+            var feature_group_1d11744a7448bac24b6bafc9d01c4485 = L.featureGroup(
                 {}
             );
         
     
-            var marker_7b7004bee936f66197c1830a54ec9ce5 = L.marker(
+            var marker_61193e4569d12f460f37f2a007af463b = L.marker(
                 [53.0200623, 4.7557992],
                 {}
-            ).addTo(feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd);
+            ).addTo(feature_group_1d11744a7448bac24b6bafc9d01c4485);
         
     
-            var icon_e2ec9a79f53f130c032c457a7e017e69 = L.AwesomeMarkers.icon(
+            var icon_c611080962aeedaddb42b81a9ebb4f6a = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
             );
-            marker_7b7004bee936f66197c1830a54ec9ce5.setIcon(icon_e2ec9a79f53f130c032c457a7e017e69);
+            marker_61193e4569d12f460f37f2a007af463b.setIcon(icon_c611080962aeedaddb42b81a9ebb4f6a);
         
     
-        var popup_ccfc78ee71d02dafed05c02f127f67f0 = L.popup({"maxWidth": 300});
+        var popup_40ad2c4f5332be2610179a92cae9b479 = L.popup({"maxWidth": 300});
 
         
             
-                var html_993f8536ee89969751af1221625634d1 = $(`<div id="html_993f8536ee89969751af1221625634d1" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Boetje van Klemat</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Sfeervol vakantiehuisje op Texel.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://boetjevanklemat.nl/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Boetje van Klemat</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Atmospheric holiday cottage on Texel.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://boetjevanklemat.nl/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_ccfc78ee71d02dafed05c02f127f67f0.setContent(html_993f8536ee89969751af1221625634d1);
+                var html_416b52691b8151bf4901db109ec57a8d = $(`<div id="html_416b52691b8151bf4901db109ec57a8d" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Boetje van Klemat</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Sfeervol vakantiehuisje op Texel.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://boetjevanklemat.nl/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Boetje van Klemat</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Atmospheric holiday cottage on Texel.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Stolpweg 20a, 1797 AV Den Hoorn, Texel</p>                 <a href="https://boetjevanklemat.nl/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_40ad2c4f5332be2610179a92cae9b479.setContent(html_416b52691b8151bf4901db109ec57a8d);
             
         
 
-        marker_7b7004bee936f66197c1830a54ec9ce5.bindPopup(popup_ccfc78ee71d02dafed05c02f127f67f0)
+        marker_61193e4569d12f460f37f2a007af463b.bindPopup(popup_40ad2c4f5332be2610179a92cae9b479)
         ;
 
         
     
     
-            feature_group_e2f7956d1e1a7f5c02bb8c439a8bdbbd.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+            var marker_78a9b012dd2cfbc35508789dbbbf814f = L.marker(
+                [53.0284202, 4.7675162],
+                {}
+            ).addTo(feature_group_1d11744a7448bac24b6bafc9d01c4485);
         
     
-            var feature_group_8da1c85d4dc3fd1696af3c40e70b9a63 = L.featureGroup(
+            var icon_2d46d5151e32d58c9a1c8c7f2c3d26b4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_78a9b012dd2cfbc35508789dbbbf814f.setIcon(icon_2d46d5151e32d58c9a1c8c7f2c3d26b4);
+        
+    
+        var popup_6e0ee506d06464566ad4d820d9c5fe64 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_338fa1ebdf00afb212e5e4cc9e64723a = $(`<div id="html_338fa1ebdf00afb212e5e4cc9e64723a" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Hoornderweg</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Karakteristieke Texelse schapenboet aan de Hoornderweg. Een gemeentelijk monument met de typische schuine zijde naar het zuidwesten.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Hoornderweg 42, 1797 RA Den Hoorn Texel</p>                 <a href="https://www.monumentenoptexel.nl/monument/hoornderweg-42-den-hoorn/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Hoornderweg</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Characteristic Texel sheep barn on Hoornderweg. A municipal monument featuring the traditional slanted side facing southwest.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Hoornderweg 42, 1797 RA Den Hoorn Texel</p>                 <a href="https://www.monumentenoptexel.nl/monument/hoornderweg-42-den-hoorn/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_6e0ee506d06464566ad4d820d9c5fe64.setContent(html_338fa1ebdf00afb212e5e4cc9e64723a);
+            
+        
+
+        marker_78a9b012dd2cfbc35508789dbbbf814f.bindPopup(popup_6e0ee506d06464566ad4d820d9c5fe64)
+        ;
+
+        
+    
+    
+            var marker_1f558e70df78ef7de3ddd7795ed5c5c8 = L.marker(
+                [53.0380376, 4.7971864],
+                {}
+            ).addTo(feature_group_1d11744a7448bac24b6bafc9d01c4485);
+        
+    
+            var icon_4be22c325f806d01d14e6517a3ab0af6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_1f558e70df78ef7de3ddd7795ed5c5c8.setIcon(icon_4be22c325f806d01d14e6517a3ab0af6);
+        
+    
+        var popup_268f844429cfd1da9db34aeb8f7a0fc8 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_d9ecbd27cc219ffd9c1320d221abb909 = $(`<div id="html_d9ecbd27cc219ffd9c1320d221abb909" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Zuid Haffel</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Historische schapenboet aan het schilderachtige cultuurlandschap van Zuid Haffel. Gemeentelijk monument.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Zuid Haffel 21, 1791 LD Den Burg</p>                 <a href="https://www.monumentenoptexel.nl/monument/zuid-haffel-21-den-burg/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Zuid Haffel</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Historical sheep barn located in the picturesque cultural landscape of Zuid Haffel. Municipal monument.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Zuid Haffel 21, 1791 LD Den Burg</p>                 <a href="https://www.monumentenoptexel.nl/monument/zuid-haffel-21-den-burg/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_268f844429cfd1da9db34aeb8f7a0fc8.setContent(html_d9ecbd27cc219ffd9c1320d221abb909);
+            
+        
+
+        marker_1f558e70df78ef7de3ddd7795ed5c5c8.bindPopup(popup_268f844429cfd1da9db34aeb8f7a0fc8)
+        ;
+
+        
+    
+    
+            var marker_b046576d030da52c5194e693d6475d6a = L.marker(
+                [53.0245364, 4.7498071],
+                {}
+            ).addTo(feature_group_1d11744a7448bac24b6bafc9d01c4485);
+        
+    
+            var icon_4c3f6d522804d1d96bfc8d895f6e392a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_b046576d030da52c5194e693d6475d6a.setIcon(icon_4c3f6d522804d1d96bfc8d895f6e392a);
+        
+    
+        var popup_8b6dcfff0d47299bf282a16a776ac734 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_4f603f39b697f23f414b4d66a3a454da = $(`<div id="html_4f603f39b697f23f414b4d66a3a454da" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Herenstraat</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Authentieke Texelse boet nabij Den Hoorn. Gemeentelijk monument en belangrijk onderdeel van het agrarisch erfgoed.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Herenstraat 47, 1797 AG Den Hoorn Texel</p>                 <a href="https://www.monumentenoptexel.nl/monument/herenstraat-47-den-hoorn/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Herenstraat</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Authentic Texel barn near Den Hoorn. Municipal monument and an important part of the island's agricultural heritage.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Herenstraat 47, 1797 AG Den Hoorn Texel</p>                 <a href="https://www.monumentenoptexel.nl/monument/herenstraat-47-den-hoorn/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_8b6dcfff0d47299bf282a16a776ac734.setContent(html_4f603f39b697f23f414b4d66a3a454da);
+            
+        
+
+        marker_b046576d030da52c5194e693d6475d6a.bindPopup(popup_8b6dcfff0d47299bf282a16a776ac734)
+        ;
+
+        
+    
+    
+            var marker_1bd55452a0151e7a162291e097dcabd5 = L.marker(
+                [53.0392904, 4.7493457],
+                {}
+            ).addTo(feature_group_1d11744a7448bac24b6bafc9d01c4485);
+        
+    
+            var icon_204e4c500df997cfc61583bd1ea964ec = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_1bd55452a0151e7a162291e097dcabd5.setIcon(icon_204e4c500df997cfc61583bd1ea964ec);
+        
+    
+        var popup_10683526b70a30ccd1c5350d8d20c8eb = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_805e288c8c3d27fc81b284c9deb17572 = $(`<div id="html_805e288c8c3d27fc81b284c9deb17572" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Westerweg</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Traditionele schapenboet langs de Westerweg. Gemeentelijk monument met een platte achterkant gericht op de noordoostenwind.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Westerweg 86, 1797 RH Den Hoorn Texel</p>                 <a href="https://www.monumentenoptexel.nl/monument/westerweg-86-den-hoorn/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Westerweg</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Traditional sheep barn along Westerweg. Municipal monument designed with its flat back facing the northeast wind.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Westerweg 86, 1797 RH Den Hoorn Texel</p>                 <a href="https://www.monumentenoptexel.nl/monument/westerweg-86-den-hoorn/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_10683526b70a30ccd1c5350d8d20c8eb.setContent(html_805e288c8c3d27fc81b284c9deb17572);
+            
+        
+
+        marker_1bd55452a0151e7a162291e097dcabd5.bindPopup(popup_10683526b70a30ccd1c5350d8d20c8eb)
+        ;
+
+        
+    
+    
+            var marker_d28207a9cfa9a8e6aa181f9bbf5f0dda = L.marker(
+                [53.0716479, 4.8295927],
+                {}
+            ).addTo(feature_group_1d11744a7448bac24b6bafc9d01c4485);
+        
+    
+            var icon_828c7c32132c7f52fc950d91fc075b2c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_d28207a9cfa9a8e6aa181f9bbf5f0dda.setIcon(icon_828c7c32132c7f52fc950d91fc075b2c);
+        
+    
+        var popup_c13a4f7dc83b255bbcbc809e81ea61bf = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_efee46c9ec580f25e8859cdfe4e9e47d = $(`<div id="html_efee46c9ec580f25e8859cdfe4e9e47d" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">De Vermaningsboet</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Bijzondere schapenboet nabij De Waal, aangeduid als rijksmonument. Rijk aan historie en lokaal Texels karakter.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Oosterenderweg 8A, 1793 ED De Waal</p>                 <a href="https://www.monumentenoptexel.nl/monument/oosterenderweg-8-de-waal/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">De Vermaningsboet</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Unique sheep barn near De Waal, registered as a national monument. Rich in history and local Texel character.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Oosterenderweg 8A, 1793 ED De Waal</p>                 <a href="https://www.monumentenoptexel.nl/monument/oosterenderweg-8-de-waal/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_c13a4f7dc83b255bbcbc809e81ea61bf.setContent(html_efee46c9ec580f25e8859cdfe4e9e47d);
+            
+        
+
+        marker_d28207a9cfa9a8e6aa181f9bbf5f0dda.bindPopup(popup_c13a4f7dc83b255bbcbc809e81ea61bf)
+        ;
+
+        
+    
+    
+            var marker_3e2be24f273eade1ea7e899eea52201c = L.marker(
+                [53.0429544, 4.8273878],
+                {}
+            ).addTo(feature_group_1d11744a7448bac24b6bafc9d01c4485);
+        
+    
+            var icon_011867dd6c11c02a55938d0494317788 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "orange", "prefix": "fa"}
+            );
+            marker_3e2be24f273eade1ea7e899eea52201c.setIcon(icon_011867dd6c11c02a55938d0494317788);
+        
+    
+        var popup_1cf93832f4ef1ae91aeaf041e81e92eb = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_756a2b4620f8f43fda7c5555ad02fbe6 = $(`<div id="html_756a2b4620f8f43fda7c5555ad02fbe6" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Skillepaadje</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Prachtige schapenboet langs het historische Skillepaadje bij Oudeschild. Officieel Rijksmonument.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Skillepaadje 10, 1791 LM Den Burg</p>                 <a href="https://www.monumentenoptexel.nl/monument/skillepaadje-10-den-burg/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Schapenboet Skillepaadje</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Beautiful sheep barn along the historic Skillepaadje near Oudeschild. Official national monument.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Skillepaadje 10, 1791 LM Den Burg</p>                 <a href="https://www.monumentenoptexel.nl/monument/skillepaadje-10-den-burg/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_1cf93832f4ef1ae91aeaf041e81e92eb.setContent(html_756a2b4620f8f43fda7c5555ad02fbe6);
+            
+        
+
+        marker_3e2be24f273eade1ea7e899eea52201c.bindPopup(popup_1cf93832f4ef1ae91aeaf041e81e92eb)
+        ;
+
+        
+    
+    
+            feature_group_1d11744a7448bac24b6bafc9d01c4485.addTo(map_e9061908c09256777070a3f648d0edc8);
+        
+    
+            var feature_group_4f0852a23f54f31c6407c106e255ba86 = L.featureGroup(
                 {}
             );
         
     
-            var marker_239acf35007b534c2be32b33c3fcdfa7 = L.marker(
+            var marker_33127cea3e054c06bcb2b3c101e6dc8a = L.marker(
                 [53.1426663, 4.8800564],
                 {}
-            ).addTo(feature_group_8da1c85d4dc3fd1696af3c40e70b9a63);
+            ).addTo(feature_group_4f0852a23f54f31c6407c106e255ba86);
         
     
-            var icon_dfae76c377492919ddf1eaef936e6341 = L.AwesomeMarkers.icon(
+            var icon_526f62532528f25639d5dd6c1e25c46f = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "binoculars", "iconColor": "white", "markerColor": "green", "prefix": "fa"}
             );
-            marker_239acf35007b534c2be32b33c3fcdfa7.setIcon(icon_dfae76c377492919ddf1eaef936e6341);
+            marker_33127cea3e054c06bcb2b3c101e6dc8a.setIcon(icon_526f62532528f25639d5dd6c1e25c46f);
         
     
-        var popup_04ca670a8136b89aa98237eb54a4025a = L.popup({"maxWidth": 300});
+        var popup_f41f67180a97c3fb26b1b9140e098eca = L.popup({"maxWidth": 300});
 
         
             
-                var html_dba72252ed77d12050c834f066aeb8cf = $(`<div id="html_dba72252ed77d12050c834f066aeb8cf" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Vogelkijkscherm Dorpzicht</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Vogelkijkhut voor het spotten van lokale weidevogels.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Hoofdweg 130, 1795 LG De Cocksdorp, Texel</p>                 <a href="https://vogelkijkhut.nl/view/677/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Dorpzicht Bird Hide</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Bird watching hide for spotting local birds.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Hoofdweg 130, 1795 LG De Cocksdorp, Texel</p>                 <a href="https://vogelkijkhut.nl/view/677/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
-                popup_04ca670a8136b89aa98237eb54a4025a.setContent(html_dba72252ed77d12050c834f066aeb8cf);
+                var html_45b000ee7eb46be3a6646239976eb7e9 = $(`<div id="html_45b000ee7eb46be3a6646239976eb7e9" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: sans-serif;">             <div class="content-nl">                 <h4 style="margin: 0 0 5px 0;">Vogelkijkscherm Dorpzicht</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Vogelkijkhut voor het spotten van lokale weidevogels.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Hoofdweg 130, 1795 LG De Cocksdorp, Texel</p>                 <a href="https://vogelkijkhut.nl/view/677/" target="_blank" class="popup-btn">Meer informatie (texel.net)</a>             </div>             <div class="content-en">                 <h4 style="margin: 0 0 5px 0;">Dorpzicht Bird Hide</h4>                 <p style="margin: 0 0 5px 0; font-size: 13px;">Bird watching hide for spotting local birds.</p>                 <p style="margin: 0 0 8px 0; font-size: 11px; color: #666;">📍 Hoofdweg 130, 1795 LG De Cocksdorp, Texel</p>                 <a href="https://vogelkijkhut.nl/view/677/" target="_blank" class="popup-btn">More details (texel.net)</a>             </div>         </div>         </div>`)[0];
+                popup_f41f67180a97c3fb26b1b9140e098eca.setContent(html_45b000ee7eb46be3a6646239976eb7e9);
             
         
 
-        marker_239acf35007b534c2be32b33c3fcdfa7.bindPopup(popup_04ca670a8136b89aa98237eb54a4025a)
+        marker_33127cea3e054c06bcb2b3c101e6dc8a.bindPopup(popup_f41f67180a97c3fb26b1b9140e098eca)
         ;
 
         
     
     
-            feature_group_8da1c85d4dc3fd1696af3c40e70b9a63.addTo(map_c35ca8f6d66944e296568b12c9ae0d64);
+            feature_group_4f0852a23f54f31c6407c106e255ba86.addTo(map_e9061908c09256777070a3f648d0edc8);
+        
+    
+            var feature_group_a341906501e905f5b899489576c79a92 = L.featureGroup(
+                {}
+            );
+        
+    
+            var poly_line_c1bb82581f736fd461a33c943bd3c323 = L.polyline(
+                [[53.05422046133, 4.7895219398375], [53.054155784832, 4.7891669819036], [53.054123081975, 4.7890290080937], [53.053969146009, 4.7884579750252], [53.053863943063, 4.7880859852544], [53.053811957882, 4.7879109934534], [53.053811957882, 4.7879109934534], [53.053848830425, 4.7878719175728], [53.053906800482, 4.7877839626784], [53.053998920143, 4.7876739805586], [53.054262771551, 4.7874260002584], [53.054815675812, 4.7869159330489], [53.055764968719, 4.7861569557826], [53.055808600926, 4.7861219779612], [53.055841115802, 4.7861099923879], [53.05587813869, 4.7861009740351], [53.055973822374, 4.7860299693534], [53.056056061559, 4.7859659087631], [53.056119034812, 4.7858679730668], [53.056596719426, 4.7854789267995], [53.056642091866, 4.7854549934161], [53.056690883689, 4.7854409172795], [53.056826765063, 4.7854339082647], [53.056864891171, 4.78542091197], [53.056898995281, 4.785389909843], [53.056957149751, 4.7853389981579], [53.056977764313, 4.7853059687693], [53.056998935779, 4.7852719994249], [53.057040661413, 4.7851929991918], [53.057074705101, 4.7851499953797], [53.057139001896, 4.7850920064555], [53.057518684205, 4.7847600016005], [53.057912129161, 4.7843729150012], [53.057912129161, 4.7843729150012], [53.057938972097, 4.7843499360002], [53.057967013928, 4.7843419725476], [53.057988932739, 4.7843449312261], [53.058014783332, 4.7843479518824], [53.058044610893, 4.7843600066224], [53.058072782993, 4.7843779108009], [53.058096029196, 4.7844214032226], [53.058096029196, 4.7844214032226], [53.058283938116, 4.7848200077618], [53.05837698256, 4.7850059812608], [53.058490919287, 4.7853259088329], [53.058828097489, 4.7863709498369], [53.059164794864, 4.7874339595247], [53.059516897143, 4.7885469989842], [53.059571022874, 4.7887010090581], [53.059600702567, 4.7887959242947], [53.059620784906, 4.7888809499746], [53.059637637342, 4.7889939881784], [53.059650854584, 4.7890539373496], [53.059660080633, 4.7891019385729], [53.059704857508, 4.7892959329254], [53.059824698887, 4.7896759315829], [53.059894848565, 4.7898899718398], [53.059971016197, 4.7900719997332], [53.060073386392, 4.7902150953612], [53.060073386392, 4.7902150953612], [53.060141259467, 4.7903106533336], [53.060185291988, 4.7903557299735], [53.060251840177, 4.7904108690152], [53.060376474148, 4.7905135725039], [53.060386635214, 4.7905239211191], [53.060813813335, 4.7909289614095], [53.060865011759, 4.7909469045603], [53.060911612912, 4.7909439342554], [53.061131705641, 4.7908172676069], [53.061131705641, 4.7908172676069], [53.061192728403, 4.7907779725849], [53.061253757536, 4.7907399592774], [53.061340615586, 4.7907006589239], [53.061340615586, 4.7907006589239], [53.061352683922, 4.7906429235489], [53.061362603978, 4.7906049125367], [53.061378110977, 4.7905609978862], [53.061436067757, 4.7904700015046], [53.061590698923, 4.7902809498832], [53.061748088373, 4.7900819531957], [53.062062926157, 4.7896959582581], [53.062326948122, 4.7893689272781], [53.062589901283, 4.789052978431], [53.063190788814, 4.7883659598738], [53.063419684085, 4.7880909089034], [53.06353864264, 4.7879569912277], [53.063601857134, 4.7879069377149], [53.063669615153, 4.7878669607022], [53.064310612292, 4.7873399545824], [53.064947068587, 4.7868039048998], [53.065641145832, 4.7862229866541], [53.06619996677, 4.7857739936501], [53.066253737925, 4.7857449272568], [53.066313813121, 4.7857409485493], [53.066354672193, 4.7857129932446], [53.066705766867, 4.7853919253731], [53.066705766867, 4.7853919253731], [53.066824888081, 4.785290972217], [53.066913821211, 4.7852179433502], [53.066913821211, 4.7852179433502], [53.06744507291, 4.7847599821796], [53.067539662145, 4.7846949149741], [53.067634853999, 4.7846379979543], [53.067735135401, 4.7845880033715], [53.067813633555, 4.7845619715008], [53.067892121728, 4.7845339582318], [53.068370137735, 4.7844348962361], [53.069257708451, 4.7843599865086], [53.070144074683, 4.7842690048805], [53.070820655058, 4.7842309378538], [53.072898840838, 4.7840339921788], [53.073111119167, 4.784029994795], [53.073218993321, 4.7840379387002], [53.073357798158, 4.7840539626795], [53.074232781571, 4.7842679608841], [53.075092048476, 4.7844839343885], [53.07550088122, 4.7845879579474], [53.075630860493, 4.7846359322623], [53.07575476776, 4.784704974883], [53.07589166794, 4.7847889926429], [53.075988029325, 4.7848529390713], [53.076081673571, 4.7849349929633], [53.076222771476, 4.7850719967487], [53.076351082017, 4.7852349424541], [53.076420691019, 4.7853399471803], [53.076480742245, 4.785442986277], [53.076602689674, 4.7856809823502], [53.076777611914, 4.7860670013461], [53.076919150152, 4.7864039389488], [53.07702405132, 4.7866030050062], [53.077160107059, 4.7868549184425], [53.077160107059, 4.7868549184425], [53.077191764513, 4.7868959833717], [53.077191764513, 4.7868959833717], [53.077243138599, 4.7869489001785], [53.07744559305, 4.7871139782744], [53.077574618037, 4.7871959006343], [53.077704100016, 4.7872569490365], [53.077957938257, 4.7873648946789], [53.07829761131, 4.7875659719629], [53.082172865398, 4.7899209276046], [53.083381716116, 4.7906399072598], [53.083982847041, 4.7910149065863], [53.084159111637, 4.7911099628317], [53.084318631564, 4.7912260044209], [53.084415734797, 4.7913269293683], [53.084574126092, 4.7914419385217], [53.084674967189, 4.7915039853211], [53.08477463461, 4.7915559042517], [53.084841131344, 4.7916009326362], [53.084956644566, 4.7916770042555], [53.085027678654, 4.7917309490804], [53.085068762657, 4.7917479923804], [53.085217888614, 4.7918069297474], [53.085506603152, 4.7919269187107], [53.089910032319, 4.7945770017498], [53.090409654535, 4.794870932565], [53.090799728108, 4.7951589008344], [53.09100079492, 4.7952730089366], [53.091116817081, 4.7953389483589], [53.091224852997, 4.7953799241545], [53.09133184003, 4.7954359582083], [53.091771709782, 4.7956859408335], [53.092638106819, 4.7962139754992], [53.093074112072, 4.796477904192], [53.0932758771, 4.7966200044626], [53.093513635149, 4.7967719959513], [53.093900653951, 4.7970109440988], [53.094277740446, 4.7972859523554], [53.094329124647, 4.7973419343152], [53.094361817714, 4.7973659815296], [53.094411940871, 4.7973939904643], [53.094486711577, 4.7974089522146], [53.094579030658, 4.7974518992763], [53.09483686374, 4.7975749367254], [53.095095957611, 4.7977259493086], [53.095351716136, 4.7978840067196], [53.09548288083, 4.7979459053089], [53.095614011642, 4.7980009235757], [53.09664763399, 4.7986169394331], [53.097288080274, 4.7989979282876], [53.097678908037, 4.7992129550566], [53.098196923951, 4.7994809656044], [53.098720121081, 4.7997749226728], [53.099058676206, 4.7999819228867], [53.099173089628, 4.8000640050225], [53.099285871367, 4.8001569571453], [53.099510601115, 4.8004020106892], [53.099646776923, 4.8005699979141], [53.099671097937, 4.8006048945969], [53.099702857862, 4.8006679178185], [53.099702857862, 4.8006679178185], [53.099721714806, 4.8007339148927], [53.099739058214, 4.8008349247185], [53.099777104632, 4.8010349163332], [53.099832634857, 4.8012499521836], [53.099832634857, 4.8012499521836], [53.099848698585, 4.8014339115643], [53.099848705008, 4.8016649774831], [53.099846004677, 4.8018019505527], [53.099841931969, 4.8018879699648], [53.099833053282, 4.8020249096715], [53.099822846749, 4.8021199930971], [53.099814090246, 4.8021670008402], [53.099799721776, 4.8022149007043], [53.099799721776, 4.8022149007043], [53.099780772827, 4.8022448995804], [53.099672016598, 4.8024009144231], [53.099540140889, 4.8025379943212], [53.099405998153, 4.8026709048835], [53.099164813875, 4.802850978722], [53.098886140722, 4.8030598983619], [53.098795893249, 4.8032109933182], [53.098707763492, 4.8034509373143], [53.098673111622, 4.8036009332498], [53.098663997475, 4.8036899338909], [53.098663728454, 4.8037500060201], [53.098718639891, 4.8038389623894], [53.099443805822, 4.8046675054328], [53.099443805822, 4.8046675054328], [53.099302811538, 4.8050089360013], [53.099144889486, 4.805449967879], [53.09899782116, 4.8059289920114], [53.098705813227, 4.8068639076882], [53.098126831373, 4.8087339838628], [53.097395878092, 4.8111249354759], [53.096962812384, 4.8125179198481], [53.096531996293, 4.8139149286487], [53.096048059011, 4.8154819573806], [53.095565148242, 4.8170329592263], [53.095299702097, 4.8179026479868]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.7, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(feature_group_a341906501e905f5b899489576c79a92);
+        
+    
+            poly_line_c1bb82581f736fd461a33c943bd3c323.bindTooltip(
+                `<div>
+                     Suggested Route
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            feature_group_a341906501e905f5b899489576c79a92.addTo(map_e9061908c09256777070a3f648d0edc8);
+        
+    
+            var feature_group_9adaa7c0d314483ecfc3d29f86956670 = L.featureGroup(
+                {}
+            );
+        
+    
+            var circle_marker_e4180549d8564589b6b7d3c4ec58fd22 = L.circleMarker(
+                [53.07189873839839, 4.829650503681326],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 36.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_0c72454b15e8fe61dd53f060be6542f0 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c27fa2cca1a8fd78a348893f30f17dd7 = $(`<div id="html_c27fa2cca1a8fd78a348893f30f17dd7" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #2169</b><br>Unique Species: 24</div>`)[0];
+                popup_0c72454b15e8fe61dd53f060be6542f0.setContent(html_c27fa2cca1a8fd78a348893f30f17dd7);
+            
+        
+
+        circle_marker_e4180549d8564589b6b7d3c4ec58fd22.bindPopup(popup_0c72454b15e8fe61dd53f060be6542f0)
+        ;
+
+        
+    
+    
+            var circle_marker_79345de73f6d0ecfdb6b7f32c4cbd6b7 = L.circleMarker(
+                [53.00452540027406, 4.780893824169468],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 31.5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_173d17783e839e0829ad6ff0e6464b80 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6568fdf623faf9ce71c87f48a914c3d9 = $(`<div id="html_6568fdf623faf9ce71c87f48a914c3d9" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #1277</b><br>Unique Species: 21</div>`)[0];
+                popup_173d17783e839e0829ad6ff0e6464b80.setContent(html_6568fdf623faf9ce71c87f48a914c3d9);
+            
+        
+
+        circle_marker_79345de73f6d0ecfdb6b7f32c4cbd6b7.bindPopup(popup_173d17783e839e0829ad6ff0e6464b80)
+        ;
+
+        
+    
+    
+            var circle_marker_6bd6d7eae96132bf80fab5b25a00ed9d = L.circleMarker(
+                [53.00452540027406, 4.756515484413539],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 27.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_da19ca673e40aa73667a1c24bb6093b3 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_97c0e44bf4ac970cdbfb798bb706a917 = $(`<div id="html_97c0e44bf4ac970cdbfb798bb706a917" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #1271</b><br>Unique Species: 18</div>`)[0];
+                popup_da19ca673e40aa73667a1c24bb6093b3.setContent(html_97c0e44bf4ac970cdbfb798bb706a917);
+            
+        
+
+        circle_marker_6bd6d7eae96132bf80fab5b25a00ed9d.bindPopup(popup_da19ca673e40aa73667a1c24bb6093b3)
+        ;
+
+        
+    
+    
+            var circle_marker_e5deac381f514d7f7010b399c91db2c8 = L.circleMarker(
+                [53.00452540027406, 4.75245242778755],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 27.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_17da9487136e38534452d2c9652b3906 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_637921363395dee8e54c10e61f552299 = $(`<div id="html_637921363395dee8e54c10e61f552299" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #1270</b><br>Unique Species: 18</div>`)[0];
+                popup_17da9487136e38534452d2c9652b3906.setContent(html_637921363395dee8e54c10e61f552299);
+            
+        
+
+        circle_marker_e5deac381f514d7f7010b399c91db2c8.bindPopup(popup_17da9487136e38534452d2c9652b3906)
+        ;
+
+        
+    
+    
+            var circle_marker_8770918606607a0b7dac0bdbb591ce67 = L.circleMarker(
+                [53.00452540027406, 4.748389371161562],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 25.5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_9c4b94d676001f4a1ec1311ed4660f17 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6f0b4dc230ddb99c08a80958e6f34d52 = $(`<div id="html_6f0b4dc230ddb99c08a80958e6f34d52" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #1269</b><br>Unique Species: 17</div>`)[0];
+                popup_9c4b94d676001f4a1ec1311ed4660f17.setContent(html_6f0b4dc230ddb99c08a80958e6f34d52);
+            
+        
+
+        circle_marker_8770918606607a0b7dac0bdbb591ce67.bindPopup(popup_9c4b94d676001f4a1ec1311ed4660f17)
+        ;
+
+        
+    
+    
+            var circle_marker_e5b9226be28f8d4ca25895e7c5ee8691 = L.circleMarker(
+                [52.99778806646163, 4.784956880795456],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 25.5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_f76d17b27c61b5e996d17195f26bdb1c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d5cdafaa781f7e0c41f9166cc80dd092 = $(`<div id="html_d5cdafaa781f7e0c41f9166cc80dd092" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #1190</b><br>Unique Species: 17</div>`)[0];
+                popup_f76d17b27c61b5e996d17195f26bdb1c.setContent(html_d5cdafaa781f7e0c41f9166cc80dd092);
+            
+        
+
+        circle_marker_e5b9226be28f8d4ca25895e7c5ee8691.bindPopup(popup_f76d17b27c61b5e996d17195f26bdb1c)
+        ;
+
+        
+    
+    
+            var circle_marker_223de9458941578603734237d32a96a8 = L.circleMarker(
+                [53.139272076522715, 4.829650503681326],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19.5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_8ea80e53b4548c9f5152ee2d1acec1fd = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_729bbc323ccb99e1525eeaf0515e3356 = $(`<div id="html_729bbc323ccb99e1525eeaf0515e3356" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #3049</b><br>Unique Species: 13</div>`)[0];
+                popup_8ea80e53b4548c9f5152ee2d1acec1fd.setContent(html_729bbc323ccb99e1525eeaf0515e3356);
+            
+        
+
+        circle_marker_223de9458941578603734237d32a96a8.bindPopup(popup_8ea80e53b4548c9f5152ee2d1acec1fd)
+        ;
+
+        
+    
+    
+            var circle_marker_9447bb57ff44bf078a812250fa3ff7c5 = L.circleMarker(
+                [53.13253474271028, 4.797146050673421],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_5533d2c16e6fe79c2d4905a6f0d1e128 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c1edc1f9627eb11d5c34ec72b6bb83c7 = $(`<div id="html_c1edc1f9627eb11d5c34ec72b6bb83c7" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #2953</b><br>Unique Species: 11</div>`)[0];
+                popup_5533d2c16e6fe79c2d4905a6f0d1e128.setContent(html_c1edc1f9627eb11d5c34ec72b6bb83c7);
+            
+        
+
+        circle_marker_9447bb57ff44bf078a812250fa3ff7c5.bindPopup(popup_5533d2c16e6fe79c2d4905a6f0d1e128)
+        ;
+
+        
+    
+    
+            var circle_marker_2ea8a4bcaf7446d44899ad467c78c6c0 = L.circleMarker(
+                [53.00452540027406, 4.764641597665515],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_36dd6ec66bff2e0dbf51c9d05d5f489b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_4cbaeed9afb1a72289c9e483d51c9213 = $(`<div id="html_4cbaeed9afb1a72289c9e483d51c9213" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #1273</b><br>Unique Species: 11</div>`)[0];
+                popup_36dd6ec66bff2e0dbf51c9d05d5f489b.setContent(html_4cbaeed9afb1a72289c9e483d51c9213);
+            
+        
+
+        circle_marker_2ea8a4bcaf7446d44899ad467c78c6c0.bindPopup(popup_36dd6ec66bff2e0dbf51c9d05d5f489b)
+        ;
+
+        
+    
+    
+            var circle_marker_1dcbc5d1c80f4769d7e7d67c41ed8eb8 = L.circleMarker(
+                [52.99778806646163, 4.740263257909586],
+                {"bubblingMouseEvents": true, "color": "crimson", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.5, "stroke": true, "weight": 3}
+            ).addTo(feature_group_9adaa7c0d314483ecfc3d29f86956670);
+        
+    
+        var popup_e5017cb2dc84a2afa46f2228f359516e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f1db6bbc17092cd865e8cb824b616b77 = $(`<div id="html_f1db6bbc17092cd865e8cb824b616b77" style="width: 100.0%; height: 100.0%;"><b>Biodiversity Spot #1179</b><br>Unique Species: 11</div>`)[0];
+                popup_e5017cb2dc84a2afa46f2228f359516e.setContent(html_f1db6bbc17092cd865e8cb824b616b77);
+            
+        
+
+        circle_marker_1dcbc5d1c80f4769d7e7d67c41ed8eb8.bindPopup(popup_e5017cb2dc84a2afa46f2228f359516e)
+        ;
+
+        
+    
+    
+            var layer_control_5afe7d50a432b53333e8bb82f6a04aff_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_e5742273f6c591a568c2708618a85d07,
+                },
+                overlays :  {
+                    "Galerie\u00ebn" : feature_group_58f12e525d7584613f6129c06ec55a24,
+                    "Gallery-route1" : feature_group_145ac7c959e02905b5990971dc2f06c1,
+                    "boetje" : feature_group_1d11744a7448bac24b6bafc9d01c4485,
+                    "vogelkijkpunt" : feature_group_4f0852a23f54f31c6407c106e255ba86,
+                    "Route Suggestie" : feature_group_a341906501e905f5b899489576c79a92,
+                    "Biodiversity Intensity" : feature_group_9adaa7c0d314483ecfc3d29f86956670,
+                },
+            };
+            let layer_control_5afe7d50a432b53333e8bb82f6a04aff = L.control.layers(
+                layer_control_5afe7d50a432b53333e8bb82f6a04aff_layers.base_layers,
+                layer_control_5afe7d50a432b53333e8bb82f6a04aff_layers.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_e9061908c09256777070a3f648d0edc8);
+
         
 </script>
 </html>
