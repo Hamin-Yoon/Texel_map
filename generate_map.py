@@ -66,7 +66,7 @@ def build_map():
     texel_map = folium.Map(
         location=[53.0583, 4.8018], 
         zoom_start=11, 
-        tiles="CartoDB positron"
+        tiles="OpenStreetMap"
     )
 
     # 4. Create Dynamic Categories (Feature Groups) FIRST
@@ -108,55 +108,19 @@ def build_map():
     # Load both files as separate layers
     add_bio_layer("biodiversity_data_bird.json", "Biodiversiteit Vogels (3 jaar)", "crimson", "skyblue")
     add_bio_layer("biodiversity_data_plant.json", "Biodiversiteit Planten (3 jaar)", "darkgreen", "green")
-
-    gpx_folder = "gpx"
-    if os.path.exists(gpx_folder):
-        for filename in sorted(os.listdir(gpx_folder)):
-            if filename.lower().endswith(".gpx"):
-                # Formats filename (e.g. 'gallery_route_1.gpx' -> 'Gallery Route 1')
-                route_name = os.path.splitext(filename)[0].replace("_", " ").title()
-                gpx_path = os.path.join(gpx_folder, filename)
-                
-                try:
-                    with open(gpx_path, 'r', encoding='utf-8') as gpx_file:
-                        gpx = gpxpy.parse(gpx_file)
-
-                    points = []
-                    for track in gpx.tracks:
-                        for segment in track.segments:
-                            for point in segment.points:
-                                points.append((point.latitude, point.longitude))
-
-                    if points:
-                        route_fg = FeatureGroup(name=route_name)
-                        route_fg.add_to(texel_map)
-
-                        folium.PolyLine(
-                            locations=points,
-                            color="blue",
-                            weight=5,
-                            opacity=0.7,
-                            tooltip=route_name
-                        ).add_to(route_fg)
-
-                        # Registers layer so UI toggle buttons generate automatically
-                        feature_groups[route_name] = route_fg
-                        
-                except Exception as e:
-                    print(f"Error parsing GPX file {filename}: {e}")
-
     category_config = {
-                'Galerieën': {'color': 'purple', 'icon': 'palette', 'prefix': 'fa'},
-                'Gallery-route1': {'color': 'darkpurple', 'icon': 'route', 'prefix': 'fa'},
-                'boet': {'color': 'orange', 'icon': 'home', 'prefix': 'fa'},
-                'vogelkijkpunt': {'color': 'green', 'icon': 'binoculars', 'prefix': 'fa'},
-                'Natuur': {'color': 'darkgreen', 'icon': 'tree', 'prefix': 'fa'},
-                'Bezienswaardigheden': {'color': 'red', 'icon': 'camera', 'prefix': 'fa'},
-                'museum': {'color': 'black', 'icon': 'museum', 'prefix': 'fa'},
-                'Biodiversiteit Vogels (3 jaar)': {'color': 'skyblue', 'icon': 'crow', 'prefix': 'fa'},
-                'Biodiversiteit Planten (3 jaar)': {'color': 'darkgreen', 'icon': 'leaf', 'prefix': 'fa'}
-            }
-    #https://fontawesome.com/search?s=solid
+                    'Galerieën': {'color': 'purple', 'icon': 'palette', 'prefix': 'fa'},
+                    'Gallery-route1': {'color': 'darkpurple', 'icon': 'route', 'prefix': 'fa'},
+                    'boet': {'color': 'orange', 'icon': 'home', 'prefix': 'fa'},
+                    'vogelkijkpunt': {'color': 'green', 'icon': 'binoculars', 'prefix': 'fa'},
+                    'Natuur': {'color': 'darkgreen', 'icon': 'tree', 'prefix': 'fa'},
+                    'Bezienswaardigheden': {'color': 'red', 'icon': 'camera', 'prefix': 'fa'},
+                    'museum': {'color': 'black', 'icon': 'museum', 'prefix': 'fa'},
+                    'Biodiversiteit Vogels (3 jaar)': {'color': 'skyblue', 'icon': 'crow', 'prefix': 'fa'},
+                    'Biodiversiteit Planten (3 jaar)': {'color': 'darkgreen', 'icon': 'leaf', 'prefix': 'fa'}
+                }
+     
+        #https://fontawesome.com/search?s=solid
     folium_to_css = {
         'purple': '#d9534f', 'darkpurple': "#5B376B", 'orange': '#F39C12',
         'green': '#72B026', 'darkgreen': '#728224', 'red': '#D33D2A',
@@ -174,6 +138,54 @@ def build_map():
         "Biodiversiteit Planten (3 jaar)": "Biodiversity of plants (3 years)"
     }
 
+    route_palette = ["#375360", "#19A7E8", "#4654AC", "#1627C0", "#7659E8"]
+    route_count = 0
+
+    gpx_folder = "gpx"
+    if os.path.exists(gpx_folder):
+        for filename in sorted(os.listdir(gpx_folder)):
+            if filename.lower().endswith(".gpx"):
+                route_name = os.path.splitext(filename)[0].replace("_", " ").title()
+                gpx_path = os.path.join(gpx_folder, filename)
+                
+                try:
+                    with open(gpx_path, 'r', encoding='utf-8') as gpx_file:
+                        gpx = gpxpy.parse(gpx_file)
+
+                    points = []
+                    for track in gpx.tracks:
+                        for segment in track.segments:
+                            for point in segment.points:
+                                points.append((point.latitude, point.longitude))
+
+                    if points:
+                        # Automatically cycle through route_palette for each route
+                        route_color = route_palette[route_count % len(route_palette)]
+                        route_count += 1
+
+                        # Store hex color in category_config dynamically while keeping the route icon
+                        category_config[route_name] = {
+                            'color': route_color, 
+                            'icon': 'route', 
+                            'prefix': 'fa'
+                        }
+
+                        route_fg = FeatureGroup(name=route_name)
+                        route_fg.add_to(texel_map)
+
+                        folium.PolyLine(
+                            locations=points,
+                            color=route_color,
+                            weight=5,
+                            opacity=0.8,
+                            tooltip=route_name
+                        ).add_to(route_fg)
+
+                        feature_groups[route_name] = route_fg
+                        
+                except Exception as e:
+                    print(f"Error parsing GPX file {filename}: {e}")
+
     # 5. Build HTML Buttons and JavaScript Dynamically via Python
 # 7. Separate feature layers into 3 panel groups
     cat_fgs = {k: v for k, v in feature_groups.items() if k in categories}
@@ -189,7 +201,7 @@ def build_map():
             layer_id = fg.get_name()
             cat_en = category_translations.get(cat, cat)
             config = category_config.get(cat, {'color': 'blue', 'icon': 'route', 'prefix': 'fa'})
-            btn_color = folium_to_css.get(config['color'], '#38AADD')
+            btn_color = folium_to_css.get(config['color'], config['color'])
 
             html += f'''
             <button id="btn_{layer_id}" class="cat-btn active" style="border-left: 4px solid {btn_color};">
