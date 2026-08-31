@@ -5,7 +5,9 @@ from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 import time
 import gpxpy
+import os
 import gpxpy.gpx
+import webbrowser  # Add this at the top of generate_map.py
 import json
 
 def geocode_addresses(df):
@@ -76,162 +78,229 @@ def build_map():
         fg.add_to(texel_map)
         feature_groups[cat] = fg
 
-    import json
-    try:
-        with open("biodiversity_data.json", "r") as f:
-            bio_data = json.load(f)
-            top_n_crs = bio_data["top_n_crs"]
-            top_n_div = bio_data["top_n_div"]
-    except FileNotFoundError:
-        top_n_crs, top_n_div = {}, {}
+   
+    def add_bio_layer(json_file, layer_name, border_color, fill_color):
+        layer = folium.FeatureGroup(name=layer_name, show=False)
+        try:
+            with open(json_file, "r") as f:
+                bio_data = json.load(f)
+                top_n_crs = bio_data.get("top_n_crs", {})
+                top_n_div = bio_data.get("top_n_div", {})
+            
+            for idx_str, coords in top_n_crs.items():
+                score = top_n_div[idx_str] 
+                lon, lat = coords[0], coords[1]
+                folium.CircleMarker(
+                    location=[lat, lon],
+                    radius=score * 1.5,       
+                    color=border_color,
+                    fill=True,
+                    fill_color=fill_color,
+                    fill_opacity=0.6,
+                    popup=f"<b>{layer_name} Spot #{idx_str}</b><br>Unique Species: {score}"
+                ).add_to(layer)
+        except FileNotFoundError:
+            print(f"Warning: {json_file} not found.")
+            
+        layer.add_to(texel_map)
+        feature_groups[layer_name] = layer
 
-    bio_layer = folium.FeatureGroup(name="Biodiversity Intensity", show=False)
+    # Load both files as separate layers
+    add_bio_layer("biodiversity_data_bird.json", "Biodiversiteit Vogels (3 jaar)", "crimson", "skyblue")
+    add_bio_layer("biodiversity_data_plant.json", "Biodiversiteit Planten (3 jaar)", "darkgreen", "green")
 
-    for idx_str, coords in top_n_crs.items():
-        score = top_n_div[idx_str] 
-        lon, lat = coords[0], coords[1]
-        folium.CircleMarker(
-            location=[lat, lon],
-            radius=score * 1.5,       
-            color="crimson",
-            fill=True,
-            fill_color="red",
-            fill_opacity=0.6,
-            popup=f"<b>Biodiversity Spot</b><br>Unique Species: {score}"
-        ).add_to(bio_layer)
+    gpx_folder = "gpx"
+    if os.path.exists(gpx_folder):
+        for filename in sorted(os.listdir(gpx_folder)):
+            if filename.lower().endswith(".gpx"):
+                # Formats filename (e.g. 'gallery_route_1.gpx' -> 'Gallery Route 1')
+                route_name = os.path.splitext(filename)[0].replace("_", " ").title()
+                gpx_path = os.path.join(gpx_folder, filename)
+                
+                try:
+                    with open(gpx_path, 'r', encoding='utf-8') as gpx_file:
+                        gpx = gpxpy.parse(gpx_file)
 
-    bio_layer.add_to(texel_map)
-    # ADD IT TO THE DICTIONARY SO THE BUTTON LOOP SEES IT
-    feature_groups["Biodiversity Intensity"] = bio_layer
+                    points = []
+                    for track in gpx.tracks:
+                        for segment in track.segments:
+                            for point in segment.points:
+                                points.append((point.latitude, point.longitude))
 
-    route_fg = FeatureGroup(name="Route Suggestie")
-    route_fg.add_to(texel_map)
-    feature_groups["Route Suggestie"] = route_fg # Adds it to your custom UI menu
+                    if points:
+                        route_fg = FeatureGroup(name=route_name)
+                        route_fg.add_to(texel_map)
 
-    # 2. Parse the GPX file
-    with open('route.gpx', 'r') as gpx_file:
-        gpx = gpxpy.parse(gpx_file)
+                        folium.PolyLine(
+                            locations=points,
+                            color="blue",
+                            weight=5,
+                            opacity=0.7,
+                            tooltip=route_name
+                        ).add_to(route_fg)
 
-    # 3. Extract the coordinates
-    points = []
-    for track in gpx.tracks:
-        for segment in track.segments:
-            for point in segment.points:
-                points.append(tuple([point.latitude, point.longitude]))
-
-    # 4. Draw the line on the map
-    folium.PolyLine(
-        locations=points,
-        color="blue",
-        weight=5,
-        opacity=0.7,
-        tooltip="Suggested Route"
-    ).add_to(route_fg)
+                        # Registers layer so UI toggle buttons generate automatically
+                        feature_groups[route_name] = route_fg
+                        
+                except Exception as e:
+                    print(f"Error parsing GPX file {filename}: {e}")
 
     category_config = {
                 'Galerieën': {'color': 'purple', 'icon': 'palette', 'prefix': 'fa'},
                 'Gallery-route1': {'color': 'darkpurple', 'icon': 'route', 'prefix': 'fa'},
-                'boetje': {'color': 'orange', 'icon': 'home', 'prefix': 'fa'},
+                'boet': {'color': 'orange', 'icon': 'home', 'prefix': 'fa'},
                 'vogelkijkpunt': {'color': 'green', 'icon': 'binoculars', 'prefix': 'fa'},
                 'Natuur': {'color': 'darkgreen', 'icon': 'tree', 'prefix': 'fa'},
-                'Bezienswaardigheden': {'color': 'red', 'icon': 'camera', 'prefix': 'fa'}
+                'Bezienswaardigheden': {'color': 'red', 'icon': 'camera', 'prefix': 'fa'},
+                'museum': {'color': 'black', 'icon': 'museum', 'prefix': 'fa'},
+                'Biodiversiteit Vogels (3 jaar)': {'color': 'skyblue', 'icon': 'crow', 'prefix': 'fa'},
+                'Biodiversiteit Planten (3 jaar)': {'color': 'darkgreen', 'icon': 'leaf', 'prefix': 'fa'}
             }
+    #https://fontawesome.com/search?s=solid
     folium_to_css = {
-        'purple': '#d9534f', 'darkpurple': '#5B396B', 'orange': '#F39C12',
+        'purple': '#d9534f', 'darkpurple': "#5B376B", 'orange': '#F39C12',
         'green': '#72B026', 'darkgreen': '#728224', 'red': '#D33D2A',
-        'blue': '#38AADD', 'cadetblue': '#436978'
+        'blue': '#38AADD', 'skyblue': "#6DCCE8"
     }
-    # 5. Build HTML Buttons and JavaScript Dynamically via Python
-    buttons_html = ""
-    js_clicks = ""
-    map_id = texel_map.get_name() # Gets Folium's internal JS map variable
     category_translations = {
         "Galerieën": "Galleries",
         "Gallery-route1": "Gallery Route 1",
-        "boetje": "Sheep Barns",
+        "boet": "Little shed",
+        "Natuur": "Nature",
+        "Bezienswaardigheden": "Attractions",
+        "museum": "Museums",
         "vogelkijkpunt": "Bird Observatories",
-        "Route Suggestie": "Suggested Route",
-        "Biodiversity Intensity": "Biodiversity"
+        "Biodiversiteit Vogels (3 jaar)": "Biodiversity of birds (3 years)",
+        "Biodiversiteit Planten (3 jaar)": "Biodiversity of plants (3 years)"
     }
-    for cat, fg in feature_groups.items():
-        layer_id = fg.get_name() # Gets Folium's internal JS layer variable
-        cat_en = category_translations.get(cat, cat)
-        config = category_config.get(cat, {'color': 'cadetblue', 'icon': 'circle', 'prefix': 'fa'})
-        btn_color = folium_to_css.get(config['color'], '#38AADD')
-        buttons_html += f'''
-        <button id="btn_{layer_id}" class="cat-btn active" style="border-left: 4px solid {btn_color};">
-            <i class="fa-solid fa-{config['icon']}" style="color: {btn_color}; width: 22px; text-align: center; font-size: 14px;"></i> 
-            <span class="lang-nl" style="flex-grow: 1; margin-left: 5px;">{cat}</span>
-            <span class="lang-en" style="flex-grow: 1; margin-left: 5px;">{cat_en}</span>
-            <i class="fa-solid fa-toggle-on toggle-icon" style="color: #28a745; font-size: 18px;"></i>
-        </button>
-        '''
-        
-        # Write the JS to toggle this exact layer
-        js_clicks += f'''
-        document.getElementById("btn_{layer_id}").onclick = function() {{
-            let toggleIcon = this.querySelector('.toggle-icon');
-            if ({map_id}.hasLayer({layer_id})) {{
-                {map_id}.removeLayer({layer_id});
-                this.classList.add('inactive');
-                toggleIcon.className = "fa-solid fa-toggle-off toggle-icon";
-                toggleIcon.style.color = "#ccc";
-            }} else {{
-                {map_id}.addLayer({layer_id});
-                this.classList.remove('inactive');
-                toggleIcon.className = "fa-solid fa-toggle-on toggle-icon";
-                toggleIcon.style.color = "#28a745";
-            }}
-        }};
-        '''
 
-    # 6. Inject the Custom UI with our generated buttons
-    custom_ui = """
+    # 5. Build HTML Buttons and JavaScript Dynamically via Python
+# 7. Separate feature layers into 3 panel groups
+    cat_fgs = {k: v for k, v in feature_groups.items() if k in categories}
+    route_fgs = {k: v for k, v in feature_groups.items() if k not in categories and not k.startswith("Biodiversiteit")}
+    bio_fgs = {k: v for k, v in feature_groups.items() if k.startswith("Biodiversiteit")}
+
+    map_id = texel_map.get_name()
+
+    def build_panel_content(fg_dict):
+        html = ""
+        js = ""
+        for cat, fg in fg_dict.items():
+            layer_id = fg.get_name()
+            cat_en = category_translations.get(cat, cat)
+            config = category_config.get(cat, {'color': 'blue', 'icon': 'route', 'prefix': 'fa'})
+            btn_color = folium_to_css.get(config['color'], '#38AADD')
+
+            html += f'''
+            <button id="btn_{layer_id}" class="cat-btn active" style="border-left: 4px solid {btn_color};">
+                <i class="fa-solid fa-{config['icon']}" style="color: {btn_color}; width: 22px; text-align: center; font-size: 14px;"></i> 
+                <span class="lang-nl" style="flex-grow: 1; margin-left: 5px;">{cat}</span>
+                <span class="lang-en" style="flex-grow: 1; margin-left: 5px;">{cat_en}</span>
+                <i class="fa-solid fa-toggle-on toggle-icon" style="color: #28a745; font-size: 18px;"></i>
+            </button>
+            '''
+            js += f'''
+            document.getElementById("btn_{layer_id}").onclick = function() {{
+                let toggleIcon = this.querySelector('.toggle-icon');
+                if ({map_id}.hasLayer({layer_id})) {{
+                    {map_id}.removeLayer({layer_id});
+                    this.classList.add('inactive');
+                    toggleIcon.className = "fa-solid fa-toggle-off toggle-icon";
+                    toggleIcon.style.color = "#ccc";
+                }} else {{
+                    {map_id}.addLayer({layer_id});
+                    this.classList.remove('inactive');
+                    toggleIcon.className = "fa-solid fa-toggle-on toggle-icon";
+                    toggleIcon.style.color = "#28a745";
+                }}
+            }};
+            '''
+        return html, js
+
+    cat_html, cat_js = build_panel_content(cat_fgs)
+    route_html, route_js = build_panel_content(route_fgs)
+    bio_html, bio_js = build_panel_content(bio_fgs)
+    
+    js_clicks = cat_js + route_js + bio_js
+
+    # 8. Inject Custom UI with 3 stacked panels
+    custom_ui = f"""
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-      body.lang-nl .content-nl { display: block; }
-      body.lang-nl .content-en { display: none; }
-      body.lang-en .content-nl { display: none; }
-      body.lang-en .content-en { display: block; }
-      /* New rules for the menu buttons */
-      body.lang-nl .lang-en { display: none !important; }
-      body.lang-en .lang-nl { display: none !important; }
-      .category-panel { position: absolute; top: 20px; left: 60px; z-index: 9999; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); font-family: sans-serif; min-width: 180px; max-width: 250px; }
-      .category-panel h4 { margin: 0 0 10px 0; font-size: 14px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-      .cat-btn { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; margin-bottom: 6px; border: 1px solid #007bff; border-radius: 5px; background: #e7f1ff; color: #007bff; cursor: pointer; font-size: 12px; font-weight: bold; text-align: left; transition: all 0.2s; }
-      .cat-btn.inactive { background: #f8f9fa; border-color: #ccc; color: #777; }
-      .lang-switcher { position: absolute; top: 20px; right: 20px; z-index: 9999; background: white; padding: 10px 15px; border: 2px solid rgba(0,0,0,0.2); border-radius: 8px; cursor: pointer; font-family: sans-serif; font-weight: bold; }
-      .popup-btn { display: inline-block; margin-top: 8px; padding: 5px 10px; background-color: #007bff; color: white !important; text-decoration: none; border-radius: 4px; font-size: 12px; }
+      body.lang-nl .content-nl {{ display: block; }}
+      body.lang-nl .content-en {{ display: none; }}
+      body.lang-en .content-nl {{ display: none; }}
+      body.lang-en .content-en {{ display: block; }}
+      body.lang-nl .lang-en {{ display: none !important; }}
+      body.lang-en .lang-nl {{ display: none !important; }}
+      
+      .panel-container {{ 
+        position: absolute; 
+        top: 20px; 
+        left: 60px; 
+        z-index: 9999; 
+        display: flex; 
+        flex-direction: column; 
+        gap: 10px; 
+        max-height: 90vh; 
+        overflow-y: auto; 
+      }}
+      .category-panel {{ 
+        background: white; 
+        padding: 12px 15px; 
+        border-radius: 8px; 
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2); 
+        font-family: sans-serif; 
+        min-width: 180px; 
+        max-width: 250px; 
+      }}
+      .category-panel h4 {{ margin: 0 0 8px 0; font-size: 13px; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #333; }}
+      .cat-btn {{ display: flex; align-items: center; gap: 8px; width: 100%; padding: 6px 8px; margin-bottom: 5px; border: 1px solid #007bff; border-radius: 5px; background: #e7f1ff; color: #007bff; cursor: pointer; font-size: 12px; font-weight: bold; text-align: left; transition: all 0.2s; }}
+      .cat-btn.inactive {{ background: #f8f9fa; border-color: #ccc; color: #777; }}
+      .lang-switcher {{ position: absolute; top: 20px; right: 20px; z-index: 9999; background: white; padding: 10px 15px; border: 2px solid rgba(0,0,0,0.2); border-radius: 8px; cursor: pointer; font-family: sans-serif; font-weight: bold; }}
+      .popup-btn {{ display: inline-block; margin-top: 8px; padding: 5px 10px; background-color: #007bff; color: white !important; text-decoration: none; border-radius: 4px; font-size: 12px; }}
     </style>
 
-    <div class="category-panel">
-      <h4 class="content-nl">Filter Categorieën</h4>
-      <h4 class="content-en">Filter Categories</h4>
-      <div id="category-buttons">
-        """ + buttons_html + """
+    <div class="panel-container">
+      <div class="category-panel">
+        <h4 class="content-nl">Filter Categorieën</h4>
+        <h4 class="content-en">Filter Categories</h4>
+        {cat_html}
+      </div>
+      
+      <div class="category-panel">
+        <h4 class="content-nl">Filter Routes</h4>
+        <h4 class="content-en">Filter Routes</h4>
+        {route_html}
+      </div>
+      
+      <div class="category-panel">
+        <h4 class="content-nl">Biodiversiteit</h4>
+        <h4 class="content-en">Biodiversity</h4>
+        {bio_html}
       </div>
     </div>
+
     <button id="langBtn" class="lang-switcher" onclick="toggleLanguage()">🇬🇧 Switch to English</button>
 
     <script>
-      function toggleLanguage() {
+      function toggleLanguage() {{
         const body = document.body;
-        if (body.classList.contains('lang-nl')) {
+        if (body.classList.contains('lang-nl')) {{
           body.classList.remove('lang-nl'); body.classList.add('lang-en');
           document.getElementById('langBtn').innerText = "🇳🇱 Bekijk in het Nederlands";
-        } else {
+        }} else {{
           body.classList.remove('lang-en'); body.classList.add('lang-nl');
           document.getElementById('langBtn').innerText = "🇬🇧 Switch to English";
-        }
-      }
+        }}
+      }}
       document.body.classList.add('lang-nl');
 
-      // Wait a fraction of a second for Folium to load, then attach our exact click events
-      window.addEventListener("load", function() {
-        setTimeout(function() {
-            """ + js_clicks + """
-        }, 500);
-      });
+      window.addEventListener("load", function() {{
+        setTimeout(function() {{
+            {js_clicks}
+        }}, 500);
+      }});
     </script>
     """
     texel_map.get_root().html.add_child(Element(custom_ui))
@@ -275,39 +344,40 @@ def build_map():
             )
         ).add_to(feature_groups[cat])
 
-    try:
-        with open("biodiversity_data.json", "r") as f:
-            bio_data = json.load(f)
-            top_n_crs = bio_data["top_n_crs"]
-            top_n_div = bio_data["top_n_div"]
-    except FileNotFoundError:
-        print("Warning: biodiversity_data.json not found. Run the sampler notebook first.")
-        top_n_crs, top_n_div = {}, {}
-    bio_layer = folium.FeatureGroup(name="Biodiversity Intensity", show=False)
+    # try:
+    #     with open("biodiversity_data_bird.json", "r") as f:
+    #         bio_data = json.load(f)
+    #         top_n_crs = bio_data["top_n_crs"]
+    #         top_n_div = bio_data["top_n_div"]
+    # except FileNotFoundError:
+    #     print("Warning: biodiversity_data_bird.json not found. Run the sampler notebook first.")
+    #     top_n_crs, top_n_div = {}, {}
+    # bio_layer = folium.FeatureGroup(name="Biodiversity Intensity", show=False)
 
-    # Loop through your Jupyter variables (top_n_crs and top_n_div)
-    for idx, coords in top_n_crs.items():
-        score = top_n_div[idx] # Get the unique species count for this grid cell
+    # # Loop through your Jupyter variables (top_n_crs and top_n_div)
+    # for idx, coords in top_n_crs.items():
+    #     score = top_n_div[idx] # Get the unique species count for this grid cell
         
-        # coords contains [longitude, latitude], but Folium requires [latitude, longitude]
-        lon, lat = coords[0], coords[1]
+    #     # coords contains [longitude, latitude], but Folium requires [latitude, longitude]
+    #     lon, lat = coords[0], coords[1]
         
-        folium.CircleMarker(
-            location=[lat, lon],
-            radius=score * 1.5,       # Adjust multiplier to make circle radius scale nicely
-            color="crimson",
-            fill=True,
-            fill_color="red",
-            fill_opacity=0.6,
-            popup=f"<b>Biodiversity Spot #{idx}</b><br>Unique Species: {score}"
-        ).add_to(bio_layer)
+    #     folium.CircleMarker(
+    #         location=[lat, lon],
+    #         radius=score * 1.5,       # Adjust multiplier to make circle radius scale nicely
+    #         color="crimson",
+    #         fill=True,
+    #         fill_color="red",
+    #         fill_opacity=0.6,
+    #         popup=f"<b>Biodiversity Spot #{idx}</b><br>Unique Species: {score}"
+    #     ).add_to(bio_layer)
 
-    # 1. Add the filled layer to the map
-    bio_layer.add_to(texel_map)
-    # feature_groups["Biodiversity Intensity"] = bio_layer
+    # # 1. Add the filled layer to the map
+    # bio_layer.add_to(texel_map)
+    # # feature_groups["Biodiversity Intensity"] = bio_layer
 
     # 8. Save output
     texel_map.save("texel_map.html")
+    webbrowser.open("texel_map.html")
     print("Successfully generated texel_map.html!")
 
 if __name__ == "__main__":
