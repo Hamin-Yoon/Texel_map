@@ -9,6 +9,8 @@ import os
 import gpxpy.gpx
 import webbrowser  # Add this at the top of generate_map.py
 import json
+import branca.colormap as cm
+from folium.plugins import HeatMap
 
 def geocode_addresses(df):
     """Fills in missing latitude and longitude using geopy."""
@@ -79,7 +81,7 @@ def build_map():
         feature_groups[cat] = fg
 
    
-    def add_bio_layer(json_file, layer_name, border_color, fill_color):
+    def add_bio_layer(json_file, layer_name, gradient_colors):
         layer = folium.FeatureGroup(name=layer_name, show=False)
         try:
             with open(json_file, "r") as f:
@@ -87,27 +89,40 @@ def build_map():
                 top_n_crs = bio_data.get("top_n_crs", {})
                 top_n_div = bio_data.get("top_n_div", {})
             
+            # Prepare heatmap data points: [latitude, longitude, intensity/score]
+            heat_data = []
             for idx_str, coords in top_n_crs.items():
                 score = top_n_div[idx_str] 
                 lon, lat = coords[0], coords[1]
-                folium.CircleMarker(
-                    location=[lat, lon],
-                    radius=score * 1.5,       
-                    color=border_color,
-                    fill=True,
-                    fill_color=fill_color,
-                    fill_opacity=0.6,
-                    popup=f"<b>{layer_name} Spot #{idx_str}</b><br>Unique Species: {score}"
+                heat_data.append([lat, lon, score])
+
+            if heat_data:
+                HeatMap(
+                    heat_data,
+                    radius=20,           # Adjust blur radius
+                    blur=15,             # Adjust smoothness
+                    max_zoom=13,
+                    min_opacity=0.4,
+                    gradient=gradient_colors  # Custom gradient dictionary
                 ).add_to(layer)
+
         except FileNotFoundError:
             print(f"Warning: {json_file} not found.")
             
         layer.add_to(texel_map)
         feature_groups[layer_name] = layer
 
+    bird_gradient = {0.4: 'yellow', 0.7: 'orange', 1.0: 'darkred'}
+    add_bio_layer("biodiversity_data_bird.json", "Biodiversiteit Vogels (3 jaar)", bird_gradient)
+
+    # Plant Heatmap: Light Green -> Green -> Dark Green
+    plant_gradient = {0.4: 'lightgreen', 0.7: 'green', 1.0: 'darkgreen'}
+    add_bio_layer("biodiversity_data_plant.json", "Biodiversiteit Planten (3 jaar)", plant_gradient)
+
     # Load both files as separate layers
-    add_bio_layer("biodiversity_data_bird.json", "Biodiversiteit Vogels (3 jaar)", "crimson", "skyblue")
-    add_bio_layer("biodiversity_data_plant.json", "Biodiversiteit Planten (3 jaar)", "darkgreen", "green")
+    # add_bio_layer("biodiversity_data_bird.json", "Biodiversiteit Vogels (3 jaar)", ['#ffcccc', '#ff0000', '#800000'])
+    # # Plant Layer: Light Green -> Dark Forest Green
+    # add_bio_layer("biodiversity_data_plant.json", "Biodiversiteit Planten (3 jaar)", ['#e2f0d9', '#385723', '#1e330c'])
     category_config = {
                     'Galerieën': {'color': 'purple', 'icon': 'palette', 'prefix': 'fa'},
                     'Gallery-route1': {'color': 'darkpurple', 'icon': 'route', 'prefix': 'fa'},
@@ -249,13 +264,14 @@ def build_map():
       .panel-container {{ 
         position: absolute; 
         top: 20px; 
-        left: 60px; 
+        right: 20px; /* Shifted from left: 60px to right: 20px */
+        left: auto;
         z-index: 9999; 
         display: flex; 
         flex-direction: column; 
         gap: 10px; 
         max-height: 90vh; 
-        overflow-y: auto; 
+        overflow-y: auto
       }}
       .category-panel {{ 
         background: white; 
@@ -269,7 +285,19 @@ def build_map():
       .category-panel h4 {{ margin: 0 0 8px 0; font-size: 13px; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #333; }}
       .cat-btn {{ display: flex; align-items: center; gap: 8px; width: 100%; padding: 6px 8px; margin-bottom: 5px; border: 1px solid #007bff; border-radius: 5px; background: #e7f1ff; color: #007bff; cursor: pointer; font-size: 12px; font-weight: bold; text-align: left; transition: all 0.2s; }}
       .cat-btn.inactive {{ background: #f8f9fa; border-color: #ccc; color: #777; }}
-      .lang-switcher {{ position: absolute; top: 20px; right: 20px; z-index: 9999; background: white; padding: 10px 15px; border: 2px solid rgba(0,0,0,0.2); border-radius: 8px; cursor: pointer; font-family: sans-serif; font-weight: bold; }}
+      .lang-switcher {{
+                position: absolute; 
+                top: 20px; 
+                left: 60px; /* Changed from right: 20px */
+                z-index: 9999; 
+                background: white; 
+                padding: 10px 15px; 
+                border: 2px solid rgba(0,0,0,0.2); 
+                border-radius: 8px; 
+                cursor: pointer; 
+                font-family: sans-serif; 
+                font-weight: bold; 
+                }}
       .popup-btn {{ display: inline-block; margin-top: 8px; padding: 5px 10px; background-color: #007bff; color: white !important; text-decoration: none; border-radius: 4px; font-size: 12px; }}
     </style>
 
@@ -290,9 +318,22 @@ def build_map():
         <h4 class="content-nl">Biodiversiteit</h4>
         <h4 class="content-en">Biodiversity</h4>
         {bio_html}
+        
+        <!-- Heatmap Color Gradient Legends -->
+        <div style="margin-top: 10px; font-size: 11px; color: #555;">
+          <div style="margin-bottom: 6px;">
+            <span class="content-nl">Vogels Dichtheid:</span>
+            <span class="content-en">Bird Intensity:</span>
+            <div style="height: 8px; width: 100%; border-radius: 4px; background: linear-gradient(to right, #ffb3b3, #ff0000, #800000); margin-top: 2px;"></div>
+          </div>
+          <div>
+            <span class="content-nl">Planten Dichtheid:</span>
+            <span class="content-en">Plant Intensity:</span>
+            <div style="height: 8px; width: 100%; border-radius: 4px; background: linear-gradient(to right, #c2f0c2, #2eb82e, #004d00); margin-top: 2px;"></div>
+          </div>
+        </div>
       </div>
     </div>
-
     <button id="langBtn" class="lang-switcher" onclick="toggleLanguage()">🇬🇧 Switch to English</button>
 
     <script>
@@ -341,20 +382,18 @@ def build_map():
             </div>
         </div>
         """
-        
 
-# 2. Inside your loop, pull these styling options dynamically:
         config = category_config.get(cat, {'color': 'blue', 'icon': 'info-circle', 'prefix': 'fa'})
-        folium.Marker(
-            location=[row['latitude'], row['longitude']],
-            popup=folium.Popup(popup_html, max_width=300),
-            # Apply custom icon, color, and icon library
-            icon=folium.Icon(
-                color=config['color'], 
-                icon=config['icon'], 
-                prefix=config['prefix']
-            )
-        ).add_to(feature_groups[cat])
+        if cat in feature_groups:
+            folium.Marker(
+                location=[row['latitude'], row['longitude']],
+                popup=folium.Popup(popup_html, max_width=300),
+                icon=folium.Icon(
+                    color=config['color'], 
+                    icon=config['icon'], 
+                    prefix=config['prefix']
+                )
+            ).add_to(feature_groups[cat])
 
     # try:
     #     with open("biodiversity_data_bird.json", "r") as f:
