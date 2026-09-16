@@ -1,2 +1,5 @@
 # Texel_map
-Digitalekaartje van Texel
+
+QR code voor Digitalekaartje van Texel
+texel_map_qr.png
+
