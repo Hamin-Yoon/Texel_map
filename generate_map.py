@@ -68,7 +68,8 @@ def build_map():
     texel_map = folium.Map(
         location=[53.0583, 4.8018], 
         zoom_start=11, 
-        tiles="OpenStreetMap"
+        tiles= "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+        attr="Esri"
     )
 
     # 4. Create Dynamic Categories (Feature Groups) FIRST
@@ -84,12 +85,13 @@ def build_map():
     def add_bio_layer(json_file, layer_name, gradient_colors):
         layer = folium.FeatureGroup(name=layer_name, show=False)
         try:
-            with open(json_file, "r") as f:
+            with open(json_file, "r", encoding="utf-8") as f:
                 bio_data = json.load(f)
                 top_n_crs = bio_data.get("top_n_crs", {})
                 top_n_div = bio_data.get("top_n_div", {})
+                details = bio_data.get("details", {}) # JSON에 새로 추가된 상세 데이터
             
-            # Prepare heatmap data points: [latitude, longitude, intensity/score]
+            # 1. 히트맵 배경 데이터 생성
             heat_data = []
             for idx_str, coords in top_n_crs.items():
                 score = top_n_div[idx_str] 
@@ -99,11 +101,55 @@ def build_map():
             if heat_data:
                 HeatMap(
                     heat_data,
-                    radius=20,           # Adjust blur radius
-                    blur=15,             # Adjust smoothness
+                    radius=25,           # 클릭 영역 확보를 위해 범위를 약간 넓힘
+                    blur=15,             
                     max_zoom=13,
                     min_opacity=0.4,
-                    gradient=gradient_colors  # Custom gradient dictionary
+                    gradient=gradient_colors
+                ).add_to(layer)
+
+            # 2. 클릭 팝업을 위한 투명 마커(CircleMarker) 생성
+            for idx_str, coords in top_n_crs.items():
+                lon, lat = coords[0], coords[1]
+                obs_list = details.get(idx_str, [])
+                
+                if not obs_list:
+                    continue
+
+                # 팝업 HTML 생성
+                popup_html = f"""
+                <div style="width: 240px; max-height: 250px; overflow-y: auto; font-family: sans-serif;">
+                    <h4 style="margin: 0 0 8px 0; font-size: 13px; color: #333; border-bottom: 2px solid #ddd; padding-bottom: 4px;">
+                        <span class="lang-nl">Waargenomen soorten ({len(obs_list)})</span>
+                        <span class="lang-en">Observed species ({len(obs_list)})</span>
+                    </h4>
+                """
+                
+                for item in obs_list[:15]:  # 상위 15개 항목 표시
+                    photo_url = item.get("photo_url", "")
+                    img_tag = f'<img src="{photo_url}" style="width:48px; height:48px; object-fit:cover; border-radius:4px;">' if photo_url else '<div style="width:48px; height:48px; background:#eee; border-radius:4px; text-align:center; line-height:48px; font-size:10px; color:#999;">No Image</div>'
+                    
+                    popup_html += f"""
+                    <div style="display: flex; gap: 10px; margin-bottom: 8px; border-bottom: 1px solid #f0f0f0; padding-bottom: 6px; align-items: center;">
+                        {img_tag}
+                        <div style="flex-grow: 1;">
+                            <strong style="font-size: 12px; color: #222; display: block; line-height: 1.2;">{item.get('name', 'Unknown')}</strong>
+                            <span style="font-size: 10px; color: #777;">📅 {item.get('date', 'N/A')}</span>
+                        </div>
+                    </div>
+                    """
+                
+                popup_html += "</div>"
+
+                # 히트맵 상단에 투명 클릭 마커 배치
+                folium.CircleMarker(
+                    location=[lat, lon],
+                    radius=18,
+                    color="transparent",      # 테두리 투명
+                    fill=True,
+                    fill_color="transparent", # 채우기 투명
+                    fill_opacity=0.01,         # 마커 클릭 이벤트를 받기 위한 미세 오파시티
+                    popup=folium.Popup(popup_html, max_width=280)
                 ).add_to(layer)
 
         except FileNotFoundError:
@@ -112,12 +158,12 @@ def build_map():
         layer.add_to(texel_map)
         feature_groups[layer_name] = layer
 
-    bird_gradient = {0.4: 'yellow', 0.7: 'orange', 1.0: 'darkred'}
-    add_bio_layer("biodiversity_data_bird.json", "Biodiversiteit Vogels (3 jaar)", bird_gradient)
+    bird_gradient = {0.4: "#A7D1E4", 0.7: "#19A7E8", 1.0: "#1519F5"}
+    add_bio_layer("biodiversity_data_bird.json", "Biodiversiteit Vogels (sep-2023 - sep-2026)", bird_gradient)
 
     # Plant Heatmap: Light Green -> Green -> Dark Green
-    plant_gradient = {0.4: 'lightgreen', 0.7: 'green', 1.0: 'darkgreen'}
-    add_bio_layer("biodiversity_data_plant.json", "Biodiversiteit Planten (3 jaar)", plant_gradient)
+    plant_gradient = {0.4: "#e2f0d9", 0.7: "#78A858", 1.0: "#1e330c"}
+    add_bio_layer("biodiversity_data_plant.json", "Biodiversiteit Planten (sep-2023 - sep-2026)", plant_gradient)
 
     # Load both files as separate layers
     # add_bio_layer("biodiversity_data_bird.json", "Biodiversiteit Vogels (3 jaar)", ['#ffcccc', '#ff0000', '#800000'])
@@ -125,35 +171,35 @@ def build_map():
     # add_bio_layer("biodiversity_data_plant.json", "Biodiversiteit Planten (3 jaar)", ['#e2f0d9', '#385723', '#1e330c'])
     category_config = {
                     'Galerieën': {'color': 'purple', 'icon': 'palette', 'prefix': 'fa'},
-                    'Gallery-route1': {'color': 'darkpurple', 'icon': 'route', 'prefix': 'fa'},
-                    'boet': {'color': 'orange', 'icon': 'home', 'prefix': 'fa'},
-                    'vogelkijkpunt': {'color': 'green', 'icon': 'binoculars', 'prefix': 'fa'},
+                    'Boet': {'color': 'orange', 'icon': 'home', 'prefix': 'fa'},
+                    'Vogelkijkpunt': {'color': 'green', 'icon': 'binoculars', 'prefix': 'fa'},
                     'Natuur': {'color': 'darkgreen', 'icon': 'tree', 'prefix': 'fa'},
-                    'Bezienswaardigheden': {'color': 'red', 'icon': 'camera', 'prefix': 'fa'},
-                    'museum': {'color': 'black', 'icon': 'museum', 'prefix': 'fa'},
-                    'Biodiversiteit Vogels (3 jaar)': {'color': 'skyblue', 'icon': 'crow', 'prefix': 'fa'},
-                    'Biodiversiteit Planten (3 jaar)': {'color': 'darkgreen', 'icon': 'leaf', 'prefix': 'fa'}
+                    'Museum': {'color': 'black', 'icon': 'museum', 'prefix': 'fa'},
+                    'Vuurtoren': {'color': 'red', 'icon': 'tower-observation', 'prefix': 'fa'},
+                    'Kijkboet (suggestie)': {'color': 'yellow', 'icon': 'caret-up', 'prefix': 'fa'},
+                    'Biodiversiteit Vogels (sep-2023 - sep-2026)': {'color': 'skyblue', 'icon': 'crow', 'prefix': 'fa'},
+                    'Biodiversiteit Planten (sep-2023 - sep-2026)': {'color': 'darkgreen', 'icon': 'leaf', 'prefix': 'fa'}
                 }
      
         #https://fontawesome.com/search?s=solid
     folium_to_css = {
-        'purple': '#d9534f', 'darkpurple': "#5B376B", 'orange': '#F39C12',
-        'green': '#72B026', 'darkgreen': '#728224', 'red': '#D33D2A',
+        'purple': "#cc29d1", 'darkpurple': "#5B376B", 'orange': '#F39C12',
+        'green': '#72B026', 'darkgreen': '#728224', 'red': '#D33D2A', 'yellow': "#F1DE2C",
         'blue': '#38AADD', 'skyblue': "#6DCCE8"
     }
     category_translations = {
         "Galerieën": "Galleries",
-        "Gallery-route1": "Gallery Route 1",
-        "boet": "Little shed",
+        "Boet": "Little shed",
         "Natuur": "Nature",
-        "Bezienswaardigheden": "Attractions",
-        "museum": "Museums",
-        "vogelkijkpunt": "Bird Observatories",
-        "Biodiversiteit Vogels (3 jaar)": "Biodiversity of birds (3 years)",
-        "Biodiversiteit Planten (3 jaar)": "Biodiversity of plants (3 years)"
+        "Museum": "Museums",
+        "Vuurtoren": "Lighthouses",
+        "Kijkboet (suggestie)": "Observation Shed (suggestion)",
+        "Vogelkijkpunt": "Bird Observatories",
+        "Biodiversiteit Vogels (sep-2023 - sep-2026)": "Biodiversity of birds (sep-2023 - sep-2026)",
+        "Biodiversiteit Planten (sep-2023 - sep-2026)": "Biodiversity of plants (sep-2023 - sep-2026)"
     }
 
-    route_palette = ["#375360", "#19A7E8", "#4654AC", "#1627C0", "#7659E8"]
+    route_palette = ["#375360", "#9930B9", "#A7BBDF", "#1627C0", "#7659E8"]
     route_count = 0
 
     gpx_folder = "gpx"
@@ -261,17 +307,18 @@ def build_map():
       body.lang-nl .lang-en {{ display: none !important; }}
       body.lang-en .lang-nl {{ display: none !important; }}
       
+      /* 기본 패널 스타일 (데스크톱) */
       .panel-container {{ 
         position: absolute; 
         top: 20px; 
-        right: 20px; /* Shifted from left: 60px to right: 20px */
+        right: 20px; 
         left: auto;
         z-index: 9999; 
         display: flex; 
         flex-direction: column; 
         gap: 10px; 
         max-height: 90vh; 
-        overflow-y: auto
+        overflow-y: auto;
       }}
       .category-panel {{ 
         background: white; 
@@ -285,20 +332,68 @@ def build_map():
       .category-panel h4 {{ margin: 0 0 8px 0; font-size: 13px; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #333; }}
       .cat-btn {{ display: flex; align-items: center; gap: 8px; width: 100%; padding: 6px 8px; margin-bottom: 5px; border: 1px solid #007bff; border-radius: 5px; background: #e7f1ff; color: #007bff; cursor: pointer; font-size: 12px; font-weight: bold; text-align: left; transition: all 0.2s; }}
       .cat-btn.inactive {{ background: #f8f9fa; border-color: #ccc; color: #777; }}
+      
       .lang-switcher {{
-                position: absolute; 
-                top: 20px; 
-                left: 60px; /* Changed from right: 20px */
-                z-index: 9999; 
-                background: white; 
-                padding: 10px 15px; 
-                border: 2px solid rgba(0,0,0,0.2); 
-                border-radius: 8px; 
-                cursor: pointer; 
-                font-family: sans-serif; 
-                font-weight: bold; 
-                }}
+        position: absolute; 
+        top: 20px; 
+        left: 60px; 
+        z-index: 9999; 
+        background: white; 
+        padding: 8px 12px; 
+        border: 2px solid rgba(0,0,0,0.2); 
+        border-radius: 8px; 
+        cursor: pointer; 
+        font-family: sans-serif; 
+        font-size: 12px;
+        font-weight: bold; 
+      }}
       .popup-btn {{ display: inline-block; margin-top: 8px; padding: 5px 10px; background-color: #007bff; color: white !important; text-decoration: none; border-radius: 4px; font-size: 12px; }}
+
+      /* 커스텀 범례 수치 스타일 */
+      .legend-labels {{ display: flex; justify-content: space-between; font-size: 9px; color: #777; margin-top: 1px; }}
+
+      /* ========================================================= */
+      /* 모바일 / 스마트폰 화면 최적화 (화면 폭 600px 이하)         */
+      /* ========================================================= */
+      @media (max-width: 600px) {{
+        .panel-container {{
+          top: 10px;
+          right: 10px;
+          gap: 6px;
+          max-height: 80vh;
+        }}
+        .category-panel {{
+          padding: 8px 10px;
+          min-width: 140px;
+          max-width: 170px;
+          border-radius: 6px;
+        }}
+        .category-panel h4 {{
+          font-size: 11px;
+          margin-bottom: 5px;
+          padding-bottom: 2px;
+        }}
+        .cat-btn {{
+          padding: 4px 6px;
+          font-size: 10px;
+          gap: 4px;
+          margin-bottom: 3px;
+        }}
+        .cat-btn i {{
+          font-size: 11px !important;
+          width: 14px !important;
+        }}
+        .toggle-icon {{
+          font-size: 14px !important;
+        }}
+        .lang-switcher {{
+          top: 10px;
+          left: 50px;
+          padding: 5px 8px;
+          font-size: 10px;
+          border-width: 1px;
+        }}
+      }}
     </style>
 
     <div class="panel-container">
@@ -319,21 +414,39 @@ def build_map():
         <h4 class="content-en">Biodiversity</h4>
         {bio_html}
         
-        <!-- Heatmap Color Gradient Legends -->
+        <!-- 통합된 패널 내 범례 (수치 + 색상 그라데이션) -->
         <div style="margin-top: 10px; font-size: 11px; color: #555;">
-          <div style="margin-bottom: 6px;">
-            <span class="content-nl">Vogels Dichtheid:</span>
-            <span class="content-en">Bird Intensity:</span>
-            <div style="height: 8px; width: 100%; border-radius: 4px; background: linear-gradient(to right, #ffb3b3, #ff0000, #800000); margin-top: 2px;"></div>
+          <!-- 새 범례 -->
+          <div style="margin-bottom: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="content-nl" style="font-weight: bold;">Vogels Dichtheid:</span>
+              <span class="content-en" style="font-weight: bold;">Bird Density:</span>
+            </div>
+            <div style="height: 8px; width: 100%; border-radius: 4px; background: linear-gradient(to right, #A7D1E4, #19A7E8, #1519F5); margin-top: 3px;"></div>
+            <div class="legend-labels">
+              <span>0 (Laag)</span>
+              <span>50</span>
+              <span>100+ (Hoog)</span>
+            </div>
           </div>
+          
+          <!-- 식물 범례 -->
           <div>
-            <span class="content-nl">Planten Dichtheid:</span>
-            <span class="content-en">Plant Intensity:</span>
-            <div style="height: 8px; width: 100%; border-radius: 4px; background: linear-gradient(to right, #c2f0c2, #2eb82e, #004d00); margin-top: 2px;"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="content-nl" style="font-weight: bold;">Planten Dichtheid:</span>
+              <span class="content-en" style="font-weight: bold;">Plant Density:</span>
+            </div>
+            <div style="height: 8px; width: 100%; border-radius: 4px; background: linear-gradient(to right, #e2f0d9, #78A858, #1e330c); margin-top: 3px;"></div>
+            <div class="legend-labels">
+              <span>0 (Laag)</span>
+              <span>50</span>
+              <span>100+ (Hoog)</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <button id="langBtn" class="lang-switcher" onclick="toggleLanguage()">🇬🇧 Switch to English</button>
 
     <script>
@@ -383,7 +496,7 @@ def build_map():
         </div>
         """
 
-        config = category_config.get(cat, {'color': 'blue', 'icon': 'info-circle', 'prefix': 'fa'})
+        config = category_config.get(cat, {'color': 'blue', 'icon': 'home', 'prefix': 'fa'})
         if cat in feature_groups:
             folium.Marker(
                 location=[row['latitude'], row['longitude']],
@@ -394,37 +507,6 @@ def build_map():
                     prefix=config['prefix']
                 )
             ).add_to(feature_groups[cat])
-
-    # try:
-    #     with open("biodiversity_data_bird.json", "r") as f:
-    #         bio_data = json.load(f)
-    #         top_n_crs = bio_data["top_n_crs"]
-    #         top_n_div = bio_data["top_n_div"]
-    # except FileNotFoundError:
-    #     print("Warning: biodiversity_data_bird.json not found. Run the sampler notebook first.")
-    #     top_n_crs, top_n_div = {}, {}
-    # bio_layer = folium.FeatureGroup(name="Biodiversity Intensity", show=False)
-
-    # # Loop through your Jupyter variables (top_n_crs and top_n_div)
-    # for idx, coords in top_n_crs.items():
-    #     score = top_n_div[idx] # Get the unique species count for this grid cell
-        
-    #     # coords contains [longitude, latitude], but Folium requires [latitude, longitude]
-    #     lon, lat = coords[0], coords[1]
-        
-    #     folium.CircleMarker(
-    #         location=[lat, lon],
-    #         radius=score * 1.5,       # Adjust multiplier to make circle radius scale nicely
-    #         color="crimson",
-    #         fill=True,
-    #         fill_color="red",
-    #         fill_opacity=0.6,
-    #         popup=f"<b>Biodiversity Spot #{idx}</b><br>Unique Species: {score}"
-    #     ).add_to(bio_layer)
-
-    # # 1. Add the filled layer to the map
-    # bio_layer.add_to(texel_map)
-    # # feature_groups["Biodiversity Intensity"] = bio_layer
 
     # 8. Save output
     texel_map.save("texel_map.html")
